@@ -2,12 +2,11 @@
   "name": "jobify",
   "version": "1.0.0",
   "description": "[Jobify](https://mern-jobify-v2.onrender.com/)",
-  "main": "index.js",
   "type": "module",
   "scripts": {
     "setup-project": "npm i && cd client && npm i",
     "setup-production-app": "npm i && cd client && npm i && npm run build ",
-    "server": "nodemon server",
+    "server": "nodemon server.js",
     "client": "cd client && npm run dev",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
@@ -35,5 +34,13 @@
     "multer": "^2.0.2",
     "nanoid": "^5.0.1",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/express": "^5.0.3",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }
