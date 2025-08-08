@@ -1,7 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { Outlet, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
-import { BigSidebar, Navbar, SmallSidebar } from "../components";
-// import { checkDefaultTheme } from "../utils/CheckDefaultTheme";
+import { BigSidebar, Loading, Navbar, SmallSidebar } from "../components";
+import { DashboardContext } from "../context/DashboardContext";
+import { DashboardProvider } from "../context/DashboardProvider";
 // import customFetch from "../utils/customFetch";
 
 // const userQuery = {
@@ -20,34 +22,11 @@ import { BigSidebar, Navbar, SmallSidebar } from "../components";
 //   }
 // };
 
-// const DashboardContext = createContext();
-
 export default function DashboardLayout() {
-  // const { user } = useQuery(userQuery).data;
-  // const navigate = useNavigate();
-  // const navigation = useNavigation();
-  // const isPageLoading = navigation.state === "loading";
-  // const [showSidebar, setShowSidebar] = useState(false);
-  // const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
+  const navigation = useNavigation();
+  const isPageLoading = navigation.state === "loading";
+  const { user } = useContext(DashboardContext);
   // const [isAuthError, setIsAuthError] = useState(false);
-
-  // const toggleDarkTheme = () => {
-  //   const newDarkTheme = !isDarkTheme;
-  //   setIsDarkTheme(newDarkTheme);
-  //   document.body.classList.toggle("dark-theme", newDarkTheme);
-  //   // localStorage.setItem("darkTheme", newDarkTheme);
-  // };
-
-  // const toggleSidebar = () => {
-  //   setShowSidebar(!showSidebar);
-  // };
-
-  // const logoutUser = async () => {
-  //   navigate("/");
-  //   // await customFetch.get("/auth/logout");
-  //   // queryClient.invalidateQueries();
-  //   toast.success("Logging out...");
-  // };
 
   // customFetch.interceptors.response.use(
   //   (response) => {
@@ -67,31 +46,19 @@ export default function DashboardLayout() {
   // }, [isAuthError]);
 
   return (
-    // <DashboardContext.Provider
-    //   value={{
-    //     user,
-    //     showSidebar,
-    //     isDarkTheme,
-    //     toggleDarkTheme,
-    //     toggleSidebar,
-    //     logoutUser,
-    //   }}
-    // >
-    <Wrapper>
-      <main className="dashboard">
-        <SmallSidebar />
-        <BigSidebar />
-        <div>
-          <Navbar />
-          <div className="dashboard-page">
-            {/* {isPageLoading ? <Loading /> : <Outlet context={{ user }} />} */}
-            <Outlet />
+    <DashboardProvider>
+      <Wrapper>
+        <main className="dashboard">
+          <SmallSidebar />
+          <BigSidebar />
+          <div>
+            <Navbar />
+            <div className="dashboard-page">
+              {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
+            </div>
           </div>
-        </div>
-      </main>
-    </Wrapper>
-    // </DashboardContext.Provider>
+        </main>
+      </Wrapper>
+    </DashboardProvider>
   );
 }
-
-// export const useDashboardContext = () => useContext(DashboardContext);

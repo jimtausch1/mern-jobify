@@ -20,7 +20,7 @@ import {
 import { checkDefaultTheme } from "./utils/CheckDefaultTheme";
 
 // import { action as registerAction } from './pages/Register';
-// import { action as loginAction } from './pages/Login';
+import { action as loginAction } from "./actions/LoginAction";
 // import { loader as dashboardLoader } from './pages/DashboardLayout';
 // import { action as addJobAction } from './pages/AddJob';
 // import { loader as allJobsLoader } from './pages/AllJobs';
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
-        // action: loginAction(queryClient),
+        action: loginAction(queryClient),
       },
       {
         path: "dashboard",

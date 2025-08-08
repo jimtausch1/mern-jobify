@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-// import { useDashboardContext } from "../pages/DashboardLayout";
+import { DashboardContext } from "../context/DashboardContext";
 import links from "../utils/links";
 
 interface NavLinksProps {
@@ -7,20 +8,20 @@ interface NavLinksProps {
 }
 
 export default function NavLinks({ isBigSidebar }: NavLinksProps) {
-  // const { toggleSidebar, user } = useDashboardContext();
+  const { toggleSidebar, user } = useContext(DashboardContext);
+
   return (
     <div className="nav-links">
       {links.map((link) => {
         const { text, path, icon } = link;
-        // const { role } = user;
-        // if (path === "admin" && role !== "admin") return;
+        const { role } = user;
+        if (path === "admin" && role !== "admin") return;
         return (
           <NavLink
             to={path}
             key={text}
             className="nav-link"
-            // onClick={isBigSidebar ? null : toggleSidebar}
-            onClick={isBigSidebar ? () => {} : () => {}}
+            onClick={isBigSidebar ? () => {} : toggleSidebar}
             end
           >
             <span className="icon">{icon}</span>
