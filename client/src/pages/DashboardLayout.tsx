@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { BigSidebar, Navbar, SmallSidebar } from "../components";
 // import { checkDefaultTheme } from "../utils/CheckDefaultTheme";
@@ -84,6 +85,7 @@ export default function DashboardLayout() {
           <Navbar />
           <div className="dashboard-page">
             {/* {isPageLoading ? <Loading /> : <Outlet context={{ user }} />} */}
+            <Outlet />
           </div>
         </div>
       </main>

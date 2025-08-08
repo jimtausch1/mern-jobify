@@ -4,7 +4,8 @@ import Wrapper from "../assets/wrappers/SmallSidebar";
 import Logo from "./Logo";
 
 import NavLinks from "./NavLinks";
-const SmallSidebar = () => {
+
+export default function SmallSidebar() {
   // const { showSidebar, toggleSidebar } = useDashboardContext();
 
   return (
@@ -27,5 +28,4 @@ const SmallSidebar = () => {
       </div>
     </Wrapper>
   );
-};
-export default SmallSidebar;
+}

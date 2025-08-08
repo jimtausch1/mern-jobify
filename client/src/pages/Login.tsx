@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 //     }
 //   };
 
-const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
 
   const loginDemoUser = async () => {
@@ -56,5 +56,4 @@ const Login = () => {
       </Form>
     </Wrapper>
   );
-};
-export default Login;
+}
