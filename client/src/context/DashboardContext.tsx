@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 interface DashboardContextValues {
   user: { name: string; role?: string; avatar?: string };
@@ -17,3 +17,5 @@ export const DashboardContext = createContext<DashboardContextValues>({
   toggleSidebar: () => {},
   logoutUser: () => {},
 });
+
+export const useDashboardContext = () => useContext(DashboardContext);

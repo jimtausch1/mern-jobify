@@ -18,7 +18,8 @@ export function DashboardProvider({ children }: DashboardProviderProps) {
     const newDarkTheme = !isDarkTheme;
     setIsDarkTheme(newDarkTheme);
     document.body.classList.toggle("dark-theme", newDarkTheme);
-    // localStorage.setItem("darkTheme", newDarkTheme);
+    const darkThemeSetting = newDarkTheme ? "true" : "false";
+    localStorage.setItem("darkTheme", darkThemeSetting);
   };
 
   const toggleSidebar = () => {

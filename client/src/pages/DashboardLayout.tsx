@@ -1,8 +1,7 @@
-import { useContext } from "react";
 import { Outlet, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { BigSidebar, Loading, Navbar, SmallSidebar } from "../components";
-import { DashboardContext } from "../context/DashboardContext";
+import { useDashboardContext } from "../context/DashboardContext";
 import { DashboardProvider } from "../context/DashboardProvider";
 // import customFetch from "../utils/customFetch";
 
@@ -25,7 +24,7 @@ import { DashboardProvider } from "../context/DashboardProvider";
 export default function DashboardLayout() {
   const navigation = useNavigation();
   const isPageLoading = navigation.state === "loading";
-  const { user } = useContext(DashboardContext);
+  const { user } = useDashboardContext();
   // const [isAuthError, setIsAuthError] = useState(false);
 
   // customFetch.interceptors.response.use(

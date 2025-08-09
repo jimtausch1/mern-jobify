@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import Wrapper from "../assets/wrappers/BigSidebar";
-import { DashboardContext } from "../context/DashboardContext";
+import { useDashboardContext } from "../context/DashboardContext";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 
 export default function BigSidebar() {
-  const { showSidebar } = useContext(DashboardContext);
+  const { showSidebar } = useDashboardContext();
 
   return (
     <Wrapper>

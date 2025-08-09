@@ -1,6 +1,5 @@
-import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { DashboardContext } from "../context/DashboardContext";
+import { useDashboardContext } from "../context/DashboardContext";
 import links from "../utils/links";
 
 interface NavLinksProps {
@@ -8,7 +7,7 @@ interface NavLinksProps {
 }
 
 export default function NavLinks({ isBigSidebar }: NavLinksProps) {
-  const { toggleSidebar, user } = useContext(DashboardContext);
+  const { toggleSidebar, user } = useDashboardContext();
 
   return (
     <div className="nav-links">
