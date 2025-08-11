@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
-import {
-  UnauthenticatedError
-} from '../errors/customErrors.js';
+import { JwtPayload } from 'jsonwebtoken';
+import { verifyJWT } from '../utils/tokenUtils.js';
+import { BadRequestError, UnauthenticatedError, UnauthorizedError } from './customErrors.js';
 
 export const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
   const { token } = req.cookies;
   if (!token) throw new UnauthenticatedError('authentication invalid');
 
   try {
-    // const { userId, role } = verifyJWT(token);
-    // const testUser = userId === '64b2c07ccac2efc972ab0eca';
-    // req.user = { userId, role, testUser };
+    const { userId, role } = verifyJWT(token) as JwtPayload;
+    const testUser = userId === '64b2c07ccac2efc972ab0eca';
+    req.user = { userId, role, testUser };
     next();
   } catch (error) {
     throw new UnauthenticatedError('authentication invalid');
@@ -19,14 +19,14 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
 
 export const authorizePermissions = (...roles: any[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    // if (!roles.includes(req.user.role)) {
-    //   throw new UnauthorizedError('Unauthorized to access this route');
-    // }
+    if (!roles.includes(req.user.role)) {
+      throw new UnauthorizedError('Unauthorized to access this route');
+    }
     next();
   };
 };
 
 export const checkForTestUser = (req: Request, res: Response, next: NextFunction) => {
-  // if (req.user.testUser) throw new BadRequestError('Demo User. Read Only!');
+  if (req.user.testUser) throw new BadRequestError('Demo User. Read Only!');
   next();
 };

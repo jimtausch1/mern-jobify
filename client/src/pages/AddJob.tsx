@@ -2,7 +2,7 @@ import Wrapper from "../assets/wrappers/DashboardFormPage";
 import { FormRow, FormRowSelect, SubmitBtn } from "../components";
 // import { useOutletContext } from 'react-router-dom';
 import { Form } from "react-router-dom";
-import { JOB_STATUS, JOB_TYPE } from "../utils/constants";
+import { JOB_STATUS, JOB_TYPE } from "../../../utils/constants";
 // import { toast } from 'react-toastify';
 // import customFetch from '../utils/customFetch';
 

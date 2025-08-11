@@ -39,7 +39,7 @@ export const getAllJobs = async (req: Request, res: Response) => {
   //   const skip = (page - 1) * limit;
 
   const jobs = await Job.find({});
-  res.status(200).json({ jobs })
+  res.status(200).json({ jobs });
   //   const jobs = await Job.find(queryObject)
   //     .sort(sortKey)
   //     .skip(skip)

@@ -2,7 +2,7 @@ import { Form, Link } from "react-router-dom";
 import { FormRow, FormRowSelect } from ".";
 import Wrapper from "../assets/wrappers/DashboardFormPage";
 // import { useAllJobsContext } from "../pages/AllJobs";
-import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from "../utils/constants";
+import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from "../../../utils/constants";
 
 export default function SearchContainer() {
   // const { searchValues } = useAllJobsContext();

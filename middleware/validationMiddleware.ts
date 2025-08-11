@@ -1,14 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { body, param, validationResult } from 'express-validator';
+import { body, param, ValidationError, validationResult } from 'express-validator';
 import mongoose from 'mongoose';
-import {
-  BadRequestError,
-  NotFoundError,
-  UnauthorizedError,
-} from '../errors/customErrors.js';
 import Job from '../models/JobModel.js';
 import User from '../models/UserModel.js';
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
+import { BadRequestError, NotFoundError, UnauthorizedError } from './customErrors.js';
 
 const withValidationErrors = (validateValues: any) => {
   return [
@@ -16,17 +12,17 @@ const withValidationErrors = (validateValues: any) => {
     (req: Request, res: Response, next: NextFunction) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        const errorMessages = errors.array().map((error) => error.msg);
+        const errorMessages = errors.array().map((error: ValidationError) => error.msg);
 
         const firstMessage = errorMessages[0];
         console.log(Object.getPrototypeOf(firstMessage));
         if (errorMessages[0].startsWith('no job')) {
-          throw new NotFoundError(errorMessages);
+          throw new NotFoundError(errorMessages.toString());
         }
         if (errorMessages[0].startsWith('not authorized')) {
           throw new UnauthorizedError('not authorized to access this route');
         }
-        throw new BadRequestError(errorMessages);
+        throw new BadRequestError(errorMessages.toString());
       }
       next();
     },
@@ -37,12 +33,8 @@ export const validateJobInput = withValidationErrors([
   body('company').notEmpty().withMessage('company is required'),
   body('position').notEmpty().withMessage('position is required'),
   body('jobLocation').notEmpty().withMessage('job location is required'),
-  body('jobStatus')
-    .isIn(Object.values(JOB_STATUS))
-    .withMessage('invalid status value'),
-  body('jobType')
-    .isIn(Object.values(JOB_TYPE))
-    .withMessage('invalid type value'),
+  body('jobStatus').isIn(Object.values(JOB_STATUS)).withMessage('invalid status value'),
+  body('jobType').isIn(Object.values(JOB_TYPE)).withMessage('invalid type value'),
 ]);
 
 export const validateIdParam = withValidationErrors([
@@ -51,11 +43,10 @@ export const validateIdParam = withValidationErrors([
     if (!isValidMongoId) throw new BadRequestError('invalid MongoDB id');
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`no job with id ${value}`);
-    // const isAdmin = req.user.role === 'admin';
-    // const isOwner = req.user.userId === job.createdBy.toString();
+    const isAdmin = req.user.role === 'admin';
+    const isOwner = req.user.userId === job.createdBy?.toString();
 
-    // if (!isAdmin && !isOwner)
-    //   throw new UnauthorizedError('not authorized to access this route');
+    if (!isAdmin && !isOwner) throw new UnauthorizedError('not authorized to access this route');
   }),
 ]);
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { UnauthenticatedError } from '../errors/customErrors.js';
+import { UnauthenticatedError } from '../middleware/customErrors.js';
 import User from '../models/UserModel.js';
 import { comparePassword, hashPassword } from '../utils/passwordUtils.js';
 import { createJWT } from '../utils/tokenUtils.js';

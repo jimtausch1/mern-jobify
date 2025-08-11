@@ -13,15 +13,15 @@ const app = express();
 // routers
 import authRouter from './routes/authRouter.js';
 import jobRouter from './routes/jobRouter.js';
-// import userRouter from './routes/userRouter.js';
+import userRouter from './routes/userRouter.js';
 
 // public
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 // middleware
-// import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
-// import { authenticateUser } from './middleware/authMiddleware.js';
+import { authenticateUser } from './middleware/authMiddleware.js';
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 
 // cloudinary.config({
 //   cloud_name: process.env.CLOUD_NAME,
@@ -47,9 +47,8 @@ app.get('/api/v1/test', (req, res) => {
   res.json({ msg: 'test route' });
 });
 
-// app.use('/api/v1/jobs', authenticateUser, jobRouter);
-// app.use('/api/v1/users', authenticateUser, userRouter);
-app.use('/api/v1/jobs', jobRouter);
+app.use('/api/v1/jobs', authenticateUser, jobRouter);
+app.use('/api/v1/users', authenticateUser, userRouter);
 app.use('/api/v1/auth', authRouter);
 
 app.get('*', (req, res) => {
@@ -60,7 +59,7 @@ app.use('*', (req, res) => {
   res.status(404).json({ msg: 'not found' });
 });
 
-// app.use(errorHandlerMiddleware);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5100;
 

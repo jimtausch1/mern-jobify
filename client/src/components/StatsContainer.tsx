@@ -1,6 +1,6 @@
 import { FaBug, FaCalendarCheck, FaSuitcaseRolling } from "react-icons/fa";
+import { JOB_STATUS } from "../../../utils/constants";
 import Wrapper from "../assets/wrappers/StatsContainer";
-import { JOB_STATUS } from "../utils/constants";
 import StatItem from "./StatItem";
 
 interface StatsContainerProps {
