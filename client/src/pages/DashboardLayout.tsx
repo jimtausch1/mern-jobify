@@ -1,9 +1,14 @@
-import { Outlet, useNavigation } from "react-router-dom";
-import Wrapper from "../assets/wrappers/Dashboard";
-import { BigSidebar, Loading, Navbar, SmallSidebar } from "../components";
-import { useDashboardContext } from "../context/DashboardContext";
-import { DashboardProvider } from "../context/DashboardProvider";
+import type { QueryClient } from '@tanstack/react-query';
+import { Outlet, useNavigation } from 'react-router-dom';
+import Wrapper from '../assets/wrappers/Dashboard';
+import { BigSidebar, Loading, Navbar, SmallSidebar } from '../components';
+import { useDashboardContext } from '../context/DashboardContext';
+import { DashboardProvider } from '../context/DashboardProvider';
 // import customFetch from "../utils/customFetch";
+
+interface DashboardLayoutProps {
+  queryClient: QueryClient;
+}
 
 // const userQuery = {
 //   queryKey: ["user"],
@@ -21,9 +26,9 @@ import { DashboardProvider } from "../context/DashboardProvider";
 //   }
 // };
 
-export default function DashboardLayout() {
+export default function DashboardLayout({ queryClient }: DashboardLayoutProps) {
   const navigation = useNavigation();
-  const isPageLoading = navigation.state === "loading";
+  const isPageLoading = navigation.state === 'loading';
   const { user } = useDashboardContext();
   // const [isAuthError, setIsAuthError] = useState(false);
 
@@ -45,7 +50,7 @@ export default function DashboardLayout() {
   // }, [isAuthError]);
 
   return (
-    <DashboardProvider>
+    <DashboardProvider queryClient={queryClient}>
       <Wrapper>
         <main className="dashboard">
           <SmallSidebar />

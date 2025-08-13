@@ -1,23 +1,24 @@
-import { Form, Link, useNavigate } from "react-router-dom";
-import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
-import { FormRow, Logo, SubmitBtn } from "../components";
-// import customFetch from '../utils/customFetch';
-import { toast } from "react-toastify";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Form, Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
+import { FormRow, Logo, SubmitBtn } from '../components';
+import customFetch from '../utils/customFetch';
 
 export default function Login() {
   const navigate = useNavigate();
 
   const loginDemoUser = async () => {
-    // const data = {
-    //   email: 'test@test.com',
-    //   password: 'secret123',
-    // };
+    const data = {
+      email: 'test@test.com',
+      password: 'secret123',
+    };
     try {
-      // await customFetch.post('/auth/login', data);
-      toast.success("Take a test drive");
-      navigate("/dashboard");
-    } catch {
-      // toast.error(error?.response?.data?.msg);
+      await customFetch.post('/auth/login', data);
+      toast.success('Take a test drive');
+      navigate('/dashboard');
+    } catch (error: any) {
+      toast.error(error?.response?.data?.msg);
     }
   };
   return (

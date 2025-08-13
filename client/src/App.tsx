@@ -1,8 +1,8 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import ErrorElement from "./components/ErrorElement";
+import ErrorElement from './components/ErrorElement';
 import {
   AddJob,
   Admin,
@@ -16,12 +16,12 @@ import {
   Profile,
   Register,
   Stats,
-} from "./pages";
-import { checkDefaultTheme } from "./utils/CheckDefaultTheme";
+} from './pages';
+import { checkDefaultTheme } from './utils/CheckDefaultTheme';
 
-// import { action as registerAction } from './pages/Register';
-import { action as loginAction } from "./actions/LoginAction";
-// import { loader as dashboardLoader } from './pages/DashboardLayout';
+import { loader as dashboardLoader } from './actions/DashboardLoader';
+import { action as loginAction } from './actions/LoginAction';
+import { action as registerAction } from './actions/RegisterAction';
 // import { action as addJobAction } from './pages/AddJob';
 // import { loader as allJobsLoader } from './pages/AllJobs';
 // import { loader as editJobLoader } from './pages/EditJob';
@@ -29,7 +29,7 @@ import { action as loginAction } from "./actions/LoginAction";
 // import { action as deleteJobAction } from './pages/DeleteJob';
 // import { loader as adminLoader } from './pages/Admin';
 // import { action as profileAction } from './pages/Profile';
-// import { loader as statsLoader } from './pages/Stats';
+import { loader as statsLoader } from './actions/StatsLoader';
 
 checkDefaultTheme();
 
@@ -43,7 +43,7 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeLayout />,
     errorElement: <Error />,
     children: [
@@ -52,20 +52,19 @@ const router = createBrowserRouter([
         element: <Landing />,
       },
       {
-        path: "register",
+        path: 'register',
         element: <Register />,
-        // action: registerAction,
+        action: registerAction,
       },
       {
-        path: "login",
+        path: 'login',
         element: <Login />,
         action: loginAction(queryClient),
       },
       {
-        path: "dashboard",
-        element: <DashboardLayout />,
-        // element: <DashboardLayout queryClient={queryClient} />,
-        //     loader: dashboardLoader(queryClient),
+        path: 'dashboard',
+        element: <DashboardLayout queryClient={queryClient} />,
+        loader: dashboardLoader(queryClient),
         children: [
           {
             index: true,
@@ -73,35 +72,35 @@ const router = createBrowserRouter([
             // action: addJobAction(queryClient),
           },
           {
-            path: "stats",
+            path: 'stats',
             element: <Stats />,
-            // loader: statsLoader(queryClient),
+            loader: statsLoader(queryClient),
             errorElement: <ErrorElement />,
           },
           {
-            path: "all-jobs",
+            path: 'all-jobs',
             element: <AllJobs />,
             // loader: allJobsLoader(queryClient),
             errorElement: <ErrorElement />,
           },
           {
-            path: "profile",
+            path: 'profile',
             element: <Profile />,
             // action: profileAction(queryClient),
           },
           {
-            path: "admin",
+            path: 'admin',
             element: <Admin />,
             // loader: adminLoader,
           },
           {
-            path: "edit-job/:id",
+            path: 'edit-job/:id',
             element: <EditJob />,
             // loader: editJobLoader(queryClient),
             // action: editJobAction(queryClient),
           },
           {
-            path: "delete-job/:id",
+            path: 'delete-job/:id',
             // action: deleteJobAction(queryClient)
           },
         ],
