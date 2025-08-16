@@ -1,16 +1,18 @@
+import type { ChangeEvent } from 'react';
+
 interface FormRowSelectProps {
   name: string;
   labelText?: string;
   list: string[];
   defaultValue?: string;
-  onChange?: () => void;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export default function FormRowSelect({
   name,
   labelText,
   list,
-  defaultValue = "",
+  defaultValue = '',
   onChange,
 }: FormRowSelectProps) {
   return (

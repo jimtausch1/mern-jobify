@@ -1,5 +1,5 @@
 import { useQuery, type QueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { userQuery } from '../actions/DashboardLoader';
@@ -12,6 +12,7 @@ interface DashboardProviderProps {
   queryClient: QueryClient;
 }
 export function DashboardProvider({ children, queryClient }: DashboardProviderProps) {
+  const [isAuthError, setIsAuthError] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
   const { user } = useQuery(userQuery).data;
@@ -29,12 +30,29 @@ export function DashboardProvider({ children, queryClient }: DashboardProviderPr
     setShowSidebar(!showSidebar);
   };
 
-  const logoutUser = async () => {
+  const logoutUser = useCallback(async () => {
     navigate('/');
     await customFetch.get('/auth/logout');
     queryClient.invalidateQueries();
     toast.success('Logging out...');
-  };
+  }, [navigate, queryClient]);
+
+  customFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error?.response?.status === 401) {
+        setIsAuthError(true);
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  useEffect(() => {
+    if (!isAuthError) return;
+    logoutUser();
+  }, [isAuthError, logoutUser]);
 
   return (
     <DashboardContext.Provider

@@ -1,29 +1,11 @@
-import Wrapper from "../assets/wrappers/DashboardFormPage";
-import { FormRow, FormRowSelect, SubmitBtn } from "../components";
-// import { useOutletContext } from 'react-router-dom';
-import { Form } from "react-router-dom";
-import { JOB_STATUS, JOB_TYPE } from "../../../utils/constants";
-// import { toast } from 'react-toastify';
-// import customFetch from '../utils/customFetch';
-
-// export const action =
-//   (queryClient) =>
-//   async ({ request }) => {
-//     const formData = await request.formData();
-//     const data = Object.fromEntries(formData);
-//     try {
-//       await customFetch.post('/jobs', data);
-//       queryClient.invalidateQueries(['jobs']);
-//       toast.success('Job added successfully ');
-//       return redirect('all-jobs');
-//     } catch (error) {
-//       toast.error(error?.response?.data?.msg);
-//       return error;
-//     }
-//   };
+import { Form } from 'react-router-dom';
+import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
+import Wrapper from '../assets/wrappers/DashboardFormPage';
+import { FormRow, FormRowSelect, SubmitBtn } from '../components';
+import { useDashboardContext } from '../context/DashboardContext';
 
 export default function AddJob() {
-  // const { user } = useOutletContext();
+  const { user } = useDashboardContext();
 
   return (
     <Wrapper>
@@ -36,7 +18,7 @@ export default function AddJob() {
             type="text"
             labelText="job location"
             name="jobLocation"
-            // defaultValue={user.location}
+            defaultValue={user.location}
           />
           <FormRowSelect
             labelText="job status"

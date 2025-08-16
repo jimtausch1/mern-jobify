@@ -1,57 +1,49 @@
 import day from 'dayjs';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import mongoose, { FilterQuery } from 'mongoose';
+import mongoose, { FilterQuery, RootQuerySelector } from 'mongoose';
 import Job from '../models/JobModel.js';
 
 export const getAllJobs = async (req: Request, res: Response) => {
-  //   const { search, jobStatus, jobType, sort } = req.query;
+  const { search, jobStatus, jobType, sort } = req.query;
 
-  //   const queryObject = {
-  //     createdBy: req.user.userId,
-  //   };
+  const queryObject: RootQuerySelector<JobModel> = {
+    createdBy: req.user.userId,
+  };
 
-  //   if (search) {
-  //     queryObject.$or = [
-  //       { position: { $regex: search, $options: 'i' } },
-  //       { company: { $regex: search, $options: 'i' } },
-  //     ];
-  //   }
+  if (search) {
+    queryObject.$or = [
+      { position: { $regex: search, $options: 'i' } },
+      { company: { $regex: search, $options: 'i' } },
+    ];
+  }
 
-  //   if (jobStatus && jobStatus !== 'all') {
-  //     queryObject.jobStatus = jobStatus;
-  //   }
-  //   if (jobType && jobType !== 'all') {
-  //     queryObject.jobType = jobType;
-  //   }
+  if (jobStatus && jobStatus !== 'all') {
+    queryObject.jobStatus = jobStatus;
+  }
+  if (jobType && jobType !== 'all') {
+    queryObject.jobType = jobType;
+  }
 
-  //   const sortOptions = {
-  //     newest: '-createdAt',
-  //     oldest: 'createdAt',
-  //     'a-z': 'position',
-  //     'z-a': '-position',
-  //   };
+  const sortOptions = {
+    newest: '-createdAt',
+    oldest: 'createdAt',
+    'a-z': 'position',
+    'z-a': '-position',
+  };
 
-  //   const sortKey = sortOptions[sort] || sortOptions.newest;
+  const sortKey = sortOptions[sort as keyof typeof sortOptions] || sortOptions.newest;
 
-  //   // setup pagination
+  // setup pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
 
-  //   const page = Number(req.query.page) || 1;
-  //   const limit = Number(req.query.limit) || 10;
-  //   const skip = (page - 1) * limit;
+  const jobs = await Job.find(queryObject).sort(sortKey).skip(skip).limit(limit);
 
-  const jobs = await Job.find({});
-  res.status(200).json({ jobs });
-  //   const jobs = await Job.find(queryObject)
-  //     .sort(sortKey)
-  //     .skip(skip)
-  //     .limit(limit);
-
-  //   const totalJobs = await Job.countDocuments(queryObject);
-  //   const numOfPages = Math.ceil(totalJobs / limit);
-  //   res
-  //     .status(StatusCodes.OK)
-  //     .json({ totalJobs, numOfPages, currentPage: page, jobs });
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalJobs / limit);
+  res.status(StatusCodes.OK).json({ totalJobs, numOfPages, currentPage: page, jobs });
 };
 
 export const createJob = async (req: Request, res: Response) => {

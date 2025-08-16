@@ -1,18 +1,14 @@
+import type { ChangeEvent } from 'react';
+
 interface FormRowProps {
   type: string;
   name: string;
   labelText?: string;
   defaultValue?: string;
-  onChange?: () => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function FormRow({
-  type,
-  name,
-  labelText,
-  defaultValue,
-  onChange,
-}: FormRowProps) {
+export default function FormRow({ type, name, labelText, defaultValue, onChange }: FormRowProps) {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -23,7 +19,7 @@ export default function FormRow({
         id={name}
         name={name}
         className="form-input"
-        defaultValue={defaultValue || ""}
+        defaultValue={defaultValue || ''}
         onChange={onChange}
         required
       />

@@ -1,7 +1,7 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from 'react';
 
 interface DashboardContextValues {
-  user: { name: string; role?: string; avatar?: string };
+  user: UserModel;
   showSidebar: boolean;
   isDarkTheme: boolean;
   toggleDarkTheme: () => void;
@@ -10,7 +10,7 @@ interface DashboardContextValues {
 }
 
 export const DashboardContext = createContext<DashboardContextValues>({
-  user: { name: "" },
+  user: {} as UserModel,
   showSidebar: false,
   isDarkTheme: false,
   toggleDarkTheme: () => {},

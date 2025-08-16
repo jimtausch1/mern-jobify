@@ -10,10 +10,12 @@ export default function Stats() {
     initialData,
   });
 
+  const { defaultStats, monthlyApplications } = data;
+
   return (
     <>
-      <StatsContainer defaultStats={data.defaultStats} />
-      {data.monthlyApplications?.length > 1 && <ChartsContainer data={data.monthlyApplications} />}
+      <StatsContainer defaultStats={defaultStats} />
+      {monthlyApplications?.length > 1 && <ChartsContainer data={monthlyApplications} />}
     </>
   );
 }
