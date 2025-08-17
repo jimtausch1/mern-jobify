@@ -9,7 +9,7 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
 
   try {
     const { userId, role } = verifyJWT(token) as JwtPayload;
-    const testUser = userId === '64b2c07ccac2efc972ab0eca';
+    const testUser = userId === '689b56e9ef5ee87ce80f2905';
     req.user = { userId, role, testUser };
     next();
   } catch (error) {

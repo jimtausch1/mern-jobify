@@ -1,4 +1,4 @@
-import Wrapper from "../assets/wrappers/StatItem";
+import Wrapper from '../assets/wrappers/StatItem';
 
 interface StatItemProps {
   count: number | string;
@@ -8,10 +8,9 @@ interface StatItemProps {
   bcg: string;
 }
 
-export default function StatItem({ count, title, icon, color }: StatItemProps) {
+export default function StatItem({ count, title, icon, color, bcg }: StatItemProps) {
   return (
-    // <Wrapper color={color} bcg={bcg}></Wrapper>
-    <Wrapper color={color}>
+    <Wrapper color={color} bcg={bcg}>
       <header>
         <span className="count">{count}</span>
         <span className="icon">{icon}</span>

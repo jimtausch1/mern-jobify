@@ -20,15 +20,15 @@ import {
 import { checkDefaultTheme } from './utils/CheckDefaultTheme';
 
 import { action as addJobAction } from './actions/AddJobAction';
+import { loader as adminLoader } from './actions/AdminLoader';
 import { loader as allJobsLoader } from './actions/AllJobsLoader';
 import { loader as dashboardLoader } from './actions/DashboardLoader';
 import { action as deleteJobAction } from './actions/DeleteJobAction';
 import { action as editJobAction } from './actions/EditJobAction';
 import { loader as editJobLoader } from './actions/EditJobLoader';
 import { action as loginAction } from './actions/LoginAction';
+import { action as profileAction } from './actions/ProfileAction';
 import { action as registerAction } from './actions/RegisterAction';
-// import { loader as adminLoader } from './pages/Admin';
-// import { action as profileAction } from './pages/Profile';
 import { loader as statsLoader } from './actions/StatsLoader';
 
 checkDefaultTheme();
@@ -86,12 +86,12 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile />,
-            // action: profileAction(queryClient),
+            action: profileAction(queryClient),
           },
           {
             path: 'admin',
             element: <Admin />,
-            // loader: adminLoader,
+            loader: adminLoader,
           },
           {
             path: 'edit-job/:id',

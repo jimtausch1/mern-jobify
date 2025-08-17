@@ -10,7 +10,7 @@ export default function Login() {
 
   const loginDemoUser = async () => {
     const data = {
-      email: 'test@test.com',
+      email: 'test1@test.com',
       password: 'secret123',
     };
     try {

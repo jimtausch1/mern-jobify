@@ -30,7 +30,10 @@ type SearchParams = {
 };
 
 type UserModel = {
+  _id: string;
   name: string;
+  email: string;
+  lastName: string;
   location: string;
   role?: string;
   avatar?: string;
