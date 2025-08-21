@@ -13,14 +13,15 @@ test.describe('dashboard page', () => {
     loginPage = new LoginPage(page);
   });
 
-  test('enter login information', async ({ page, context }) => {
+  test('enter login information', async ({ page }) => {
     await loginPage.goto();
     await loginPage.attemptLogin();
     await loginPage.loginSuccess();
   });
 
-  test('theme selector', async ({ page, context, storageState }) => {
+  test('theme and sidebar selector', async ({ page }) => {
     await dashboardPage.goto();
     await dashboardPage.selectTheme();
+    await dashboardPage.toggleSidebar();
   });
 });
