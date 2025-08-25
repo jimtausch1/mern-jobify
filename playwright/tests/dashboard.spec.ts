@@ -1,27 +1,16 @@
 import { test } from '@playwright/test';
-import { DashboardPage } from '../pages/DashboardPage';
-import { LoginPage } from '../pages/LoginPage';
+import { PageManager } from '../pages/PageManager';
 
 test.describe('dashboard page', () => {
-  test.use({ storageState: './playwright/authState.json' });
-
-  let dashboardPage: DashboardPage;
-  let loginPage: LoginPage;
-
-  test.beforeEach(async ({ page }) => {
-    dashboardPage = new DashboardPage(page);
-    loginPage = new LoginPage(page);
-  });
+  // const authStateFile = path.resolve(__dirname, '../authState.json');
+  // test.use({ storageState: authStateFile });
 
   test('enter login information', async ({ page }) => {
-    await loginPage.goto();
-    await loginPage.attemptLogin();
-    await loginPage.loginSuccess();
-  });
+    const pm = new PageManager(page);
+    const loginPage = pm.onLoginPage();
+    const dashboardPage = pm.onDashboardPage();
 
-  test('theme and sidebar selector', async ({ page }) => {
-    await dashboardPage.goto();
-    await dashboardPage.selectTheme();
-    await dashboardPage.toggleSidebar();
+    await loginPage.runAllTests();
+    await dashboardPage.runAllTests();
   });
 });

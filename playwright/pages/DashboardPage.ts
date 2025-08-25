@@ -15,6 +15,11 @@ export class DashboardPage extends BasePage {
     this.sideBarClass = this.page.locator('.show-sidebar');
   }
 
+  async runAllTests(): Promise<void> {
+    await this.selectTheme();
+    await this.toggleSidebar();
+  }
+
   async goto() {
     await this.page.goto('http://localhost:5000/dashboard');
   }

@@ -8,7 +8,8 @@
     "setup-production-app": "npm i && cd client && npm i && npm run build ",
     "server": "npx tsx watch server",
     "client": "cd client && npm run dev",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "mern-jobify-chrome": "npx playwright test --project=smoketest"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
     "nanoid": "^5.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.9",
     "@types/express": "^5.0.3",
