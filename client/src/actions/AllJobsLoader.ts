@@ -26,6 +26,12 @@ export const loader =
   (queryClient: QueryClient) =>
   async ({ request }: LoaderFunctionArgs) => {
     const params = Object.fromEntries([...new URL(request.url).searchParams.entries()]);
+    if (Object.keys(params).length === 0) {
+      params['search'] = '';
+      params['jobStatus'] = 'all';
+      params['jobType'] = 'all';
+      params['sort'] = 'newest';
+    }
 
     await queryClient.ensureQueryData(allJobsQuery(params));
     return { searchParams: { ...params } };
