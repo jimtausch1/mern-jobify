@@ -6,8 +6,8 @@ import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useAllJobsContext } from '../context/AllJobsContext';
 
 export default function SearchContainer() {
-  const { params: searchValues } = useAllJobsContext();
-  const { search, jobStatus, jobType, sort } = searchValues;
+  const { searchParams } = useAllJobsContext();
+  const { search, jobStatus, jobType, sort } = searchParams;
   const submit = useSubmit();
 
   const debounce = (onChange: (form: HTMLFormElement) => void) => {

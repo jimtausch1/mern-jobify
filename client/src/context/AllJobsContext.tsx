@@ -2,16 +2,16 @@
 import { createContext, useContext } from 'react';
 
 interface AllJobsContextValues {
-  params: SearchParams;
+  searchParams: SearchParams;
   data: any;
 }
 
 export const AllJobsContext = createContext<AllJobsContextValues>({
-  params: {
+  searchParams: {
     search: '',
-    jobStatus: '',
-    jobType: '',
-    sort: '',
+    jobStatus: 'all',
+    jobType: 'all',
+    sort: 'newest',
     page: 1,
   },
   data: [],

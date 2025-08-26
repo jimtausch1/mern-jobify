@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import { useRef, type ChangeEvent } from 'react';
 
 interface FormRowSelectProps {
   name: string;
@@ -15,6 +15,11 @@ export default function FormRowSelect({
   defaultValue = '',
   onChange,
 }: FormRowSelectProps) {
+  const selectRef = useRef<HTMLSelectElement>(null);
+  if (selectRef && selectRef.current) {
+    selectRef.current.value = defaultValue;
+  }
+
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -23,6 +28,7 @@ export default function FormRowSelect({
       <select
         name={name}
         id={name}
+        ref={selectRef}
         className="form-select"
         defaultValue={defaultValue}
         onChange={onChange}

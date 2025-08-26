@@ -3,15 +3,14 @@ import { AllJobsContext } from './AllJobsContext';
 
 interface AllJobsProviderProps {
   children: React.ReactNode | string;
+  searchParams: SearchParams;
   data: any;
-  searchValues: SearchParams;
 }
-export function AllJobsProvider({ children, data, searchValues }: AllJobsProviderProps) {
-  // const { search, jobStatus, jobType, sort, page } = searchValues;
+
+export function AllJobsProvider({ children, searchParams, data }: AllJobsProviderProps) {
+  // const { search, jobStatus, jobType, sort, page } = searchParams;
 
   return (
-    <AllJobsContext.Provider value={{ params: searchValues, data }}>
-      {children}
-    </AllJobsContext.Provider>
+    <AllJobsContext.Provider value={{ searchParams, data }}>{children}</AllJobsContext.Provider>
   );
 }

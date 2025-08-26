@@ -20,11 +20,11 @@ export class DashboardPage extends BasePage {
     await this.toggleSidebar();
   }
 
-  async goto() {
+  private async goto() {
     await this.page.goto('http://localhost:5000/dashboard');
   }
 
-  async selectTheme() {
+  private async selectTheme() {
     await this.waitForNumberOfSeconds(1);
 
     await this.themeButton.click();
@@ -36,7 +36,7 @@ export class DashboardPage extends BasePage {
     expect(this.themeClass).not.toBeVisible();
   }
 
-  async toggleSidebar() {
+  private async toggleSidebar() {
     await this.waitForNumberOfSeconds(1);
 
     await this.sideBarToggle.click();

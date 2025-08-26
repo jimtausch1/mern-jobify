@@ -5,11 +5,11 @@ import { JobsContainer, SearchContainer } from '../components';
 import { AllJobsProvider } from '../context/AllJobsProvider';
 
 export default function AllJobs() {
-  const { searchValues } = useLoaderData();
-  const { data } = useQuery(allJobsQuery(searchValues));
+  const { searchParams } = useLoaderData();
+  const { data } = useQuery(allJobsQuery(searchParams));
 
   return (
-    <AllJobsProvider data={data} searchValues={searchValues}>
+    <AllJobsProvider data={data} searchParams={searchParams}>
       <SearchContainer />
       <JobsContainer />
     </AllJobsProvider>

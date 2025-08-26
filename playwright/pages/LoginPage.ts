@@ -8,8 +8,6 @@ export class LoginPage extends BasePage {
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly logoutButton: Locator;
-  readonly sidebar: Locator;
-  readonly activeSidebar: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -18,8 +16,6 @@ export class LoginPage extends BasePage {
     this.submitButton = this.page.getByText('Submit');
     this.emailInput = this.page.getByLabel('Email');
     this.passwordInput = this.page.getByLabel('Password');
-    this.sidebar = this.page.locator('.sidebar-container.show-sidebar');
-    this.activeSidebar = this.sidebar.locator('.nav-link.active');
   }
 
   async runAllTests() {
@@ -28,12 +24,12 @@ export class LoginPage extends BasePage {
     await this.loginSuccess();
   }
 
-  async goto() {
+  private async goto() {
     await this.page.goto('http://localhost:5000/');
     await this.loginButton.click();
   }
 
-  async attemptLogin() {
+  private async attemptLogin() {
     const testuser = process.env.TEST_USER as string;
     const testPassword = process.env.TEST_PASSWORD as string;
     const authStateFile = path.resolve(__dirname, '../authState.json');
@@ -44,7 +40,7 @@ export class LoginPage extends BasePage {
     await this.page.context().storageState({ path: authStateFile });
   }
 
-  async loginSuccess() {
+  private async loginSuccess() {
     await expect(this.page).toHaveTitle(/Jobify/);
     await expect(this.logoutButton).toContainText(/Bubbles McLaughster/);
     await expect(this.activeSidebar).toContainText(/add job/);
