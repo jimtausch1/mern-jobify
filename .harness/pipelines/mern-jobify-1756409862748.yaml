@@ -20,12 +20,14 @@ pipeline:
                     shell: Sh
                     command: echo "Welcome to Harness CI"
               - step:
-                  type: Run
-                  name: Run_2
-                  identifier: Run_2
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
                   spec:
-                    shell: Bash
-                    command: npm run setup-production-app
+                    connectorRef: account.harnessImage
+                    repo: us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.08.86503
+                    tags:
+                      - mern-jobify
           platform:
             os: Linux
             arch: Amd64
