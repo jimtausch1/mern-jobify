@@ -1,5 +1,6 @@
 inputSet:
   name: Build_mern_jobify_1756409868274-push-trigger-input-set
+  tags: {}
   identifier: Build_mern_jobify_1756409868274pushtriggerinputset
   orgIdentifier: default
   projectIdentifier: default_project
@@ -11,4 +12,4 @@ inputSet:
           build:
             type: branch
             spec:
-              branch: <+trigger.branch>
+              branch: main
