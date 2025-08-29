@@ -18,7 +18,7 @@ jobs:
       - name: Install tsx globally
         run: npm install -g tsx
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps --force
       - name: Create .env file
         run: |
           echo "PORT=5000" >> .env
