@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_mern_jobify_1756409868274-pr-trigger-input-set
+  identifier: Build_mern_jobify_1756409868274prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_mern_jobify_1756409868274
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
