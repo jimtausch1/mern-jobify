@@ -17,12 +17,6 @@ jobs:
         run: npm ci --force
       - name: Install tsx globally
         run: npm install -g tsx
-      - name: Run headless test
-        uses: coactions/setup-xvfb@v1
-        with:
-          run: npm test
-          working-directory: ./ #optional
-          options: #optional
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps --force
       - name: Create .env file
@@ -39,7 +33,11 @@ jobs:
           echo "TEST_USER=${{ secrets.TEST_USER }}" >> .env
           # Add other environment variables as needed
       - name: Run Playwright tests
-        run: npm run mern-jobify-chrome-ci
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: npm run mern-jobify-chrome-ci
+          working-directory: ./ #optional
+          options: #optional
       - name: Upload traces as artifacts (optional)
         uses: actions/upload-artifact@v4
         if: always()
