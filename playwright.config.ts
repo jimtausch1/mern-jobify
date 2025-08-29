@@ -60,6 +60,13 @@ export default defineConfig({
       outputDir: './playwright/test-results',
     },
 
+    {
+      name: 'cismoketest',
+      testMatch: ['dashboard.spec.ts'],
+      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5000', headless: true },
+      outputDir: './playwright/test-results',
+    },
+
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
