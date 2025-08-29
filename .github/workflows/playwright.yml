@@ -34,6 +34,12 @@ jobs:
           # Add other environment variables as needed
       - name: Run Playwright tests
         run: npm run mern-jobify-chrome
+      - name: Upload traces as artifacts (optional)
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-traces
+          path: test-results/
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
