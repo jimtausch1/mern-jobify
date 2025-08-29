@@ -1,8 +1,7 @@
-import { faker } from '@faker-js/faker';
-import { expect, Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
-export class AddJobPage extends BasePage {
+export class AllJobsPage extends BasePage {
   readonly positionInput: Locator;
   readonly companyInput: Locator;
   readonly jobLocationInput: Locator;
@@ -25,22 +24,23 @@ export class AddJobPage extends BasePage {
   }
 
   async runAllTests() {
-    await this.fillFormAndSubmit();
+    await this.filterByJobStatusAndType();
+    await this.selectJobToEdit();
   }
 
-  private async fillFormAndSubmit() {
-    BasePage.randomJobTitle = faker.person.jobTitle();
-    await this.positionInput.pressSequentially(BasePage.randomJobTitle, { delay: 100 });
-    await this.companyInput.pressSequentially(faker.company.name(), { delay: 100 });
-
-    await this.jobLocationInput.clear();
-    await this.jobLocationInput.pressSequentially(faker.location.state(), { delay: 100 });
-
+  private async filterByJobStatusAndType() {
     await this.jobStatusSelect.selectOption('interview');
     await this.jobTypeSelect.selectOption('part-time');
+    await this.waitForNumberOfSeconds(2);
 
-    await this.waitForNumberOfSeconds(1);
-    await this.submitButton.click();
-    await expect(this.activeSidebar).toContainText(/all jobs/);
+    await this.resetSearchButton.click();
+  }
+
+  private async selectJobToEdit() {
+    const selectArticleToEdit = this.page
+      .locator('article')
+      .filter({ hasText: BasePage.randomJobTitle });
+
+    await selectArticleToEdit.locator('.edit-btn').click();
   }
 }

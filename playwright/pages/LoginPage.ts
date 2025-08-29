@@ -30,12 +30,10 @@ export class LoginPage extends BasePage {
   }
 
   private async attemptLogin() {
-    const testuser = process.env.TEST_USER as string;
-    const testPassword = process.env.TEST_PASSWORD as string;
     const authStateFile = path.resolve(__dirname, '../authState.json');
 
-    await this.emailInput.pressSequentially(testuser, { delay: 100 });
-    await this.passwordInput.pressSequentially(testPassword, { delay: 100 });
+    await this.emailInput.pressSequentially(this.testuser, { delay: 100 });
+    await this.passwordInput.pressSequentially(this.testPassword, { delay: 100 });
     await this.submitButton.click();
     await this.page.context().storageState({ path: authStateFile });
   }
@@ -45,6 +43,6 @@ export class LoginPage extends BasePage {
     await expect(this.logoutButton).toContainText(/Bubbles McLaughster/);
     await expect(this.activeSidebar).toContainText(/add job/);
 
-    await this.waitForNumberOfSeconds(6);
+    await this.waitForNumberOfSeconds(2);
   }
 }
