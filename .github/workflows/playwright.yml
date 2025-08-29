@@ -19,6 +19,10 @@ jobs:
         run: npm install -g tsx
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Create .env file
+        run: |
+          echo "PORT=5001" >> .env
+          # Add other environment variables as needed
       - name: Run Playwright tests
         run: npm run mern-jobify-chrome
       - uses: actions/upload-artifact@v4
