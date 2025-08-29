@@ -34,6 +34,8 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    headless: process.env.CI ? true : false,
   },
 
   /* Configure projects for major browsers */
@@ -57,13 +59,6 @@ export default defineConfig({
       name: 'smoketest',
       testMatch: ['dashboard.spec.ts'],
       use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5000' },
-      outputDir: './playwright/test-results',
-    },
-
-    {
-      name: 'cismoketest',
-      testMatch: ['dashboard.spec.ts'],
-      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5000', headless: true },
       outputDir: './playwright/test-results',
     },
 
