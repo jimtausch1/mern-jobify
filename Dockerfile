@@ -5,4 +5,5 @@ WORKDIR /app
 COPY . /app/
 
 RUN npm install --force
+RUN npm install -g tsx
 RUN npx playwright install
