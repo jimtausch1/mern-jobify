@@ -10,7 +10,7 @@
     "client": "cd client && npm run dev",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "mern-jobify-chrome": "npx playwright test --project=smoketest",
-    "mern-jobify-chrome-ci": "xvfb-run npx playwright test --project=smoketest --trace on"
+    "mern-jobify-chrome-ci": "npx playwright test --project=smoketest --trace on"
   },
   "keywords": [],
   "author": "",
