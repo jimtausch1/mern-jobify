@@ -82,7 +82,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx tsx ./server.ts',
+    command: 'npx tsx server.ts',
     url: 'http://localhost:5000',
     reuseExistingServer: !process.env.CI,
   },
