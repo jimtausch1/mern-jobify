@@ -6,7 +6,7 @@
   "scripts": {
     "setup-project": "npm i && cd client && npm i",
     "setup-production-app": "npm i && cd client && npm i && npm run build ",
-    "server": "npx tsx watch server",
+    "server": "npx tsx server",
     "client": "cd client && npm run dev",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "mern-jobify-chrome": "npx playwright test --project=smoketest"
