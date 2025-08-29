@@ -55,7 +55,7 @@ export default defineConfig({
     {
       name: 'smoketest',
       testMatch: ['dashboard.spec.ts'],
-      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5001' },
+      use: { ...devices['Desktop Chrome'], baseURL: 'http://localhost:5000' },
       outputDir: './playwright/test-results',
     },
 
@@ -83,7 +83,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npm run server',
-    url: 'http://localhost:5001',
+    url: 'http://localhost:5000',
     reuseExistingServer: !process.env.CI,
   },
 });

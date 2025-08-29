@@ -21,7 +21,7 @@ export class DashboardPage extends BasePage {
   }
 
   private async goto() {
-    await this.page.goto('http://localhost:5001/dashboard');
+    await this.page.goto('http://localhost:5000/dashboard');
   }
 
   private async selectTheme() {
