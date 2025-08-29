@@ -33,7 +33,7 @@ jobs:
           echo "TEST_USER=${{ secrets.TEST_USER }}" >> .env
           # Add other environment variables as needed
       - name: Run Playwright tests
-        run: npm run mern-jobify-chrome
+        run: npm run mern-jobify-chrome-ci
       - name: Upload traces as artifacts (optional)
         uses: actions/upload-artifact@v4
         if: always()
