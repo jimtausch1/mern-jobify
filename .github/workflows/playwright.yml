@@ -23,7 +23,14 @@ jobs:
         run: |
           echo "PORT=5000" >> .env
           echo "NODE_ENV=development" >> .env
+          echo "CLOUD_API_KEY=${{ secrets.CLOUD_API_KEY }}" >> .env
+          echo "CLOUD_API_SECRET=${{ secrets.CLOUD_API_SECRET }}" >> .env
+          echo "CLOUD_NAME=${{ secrets.CLOUD_NAME }}" >> .env
+          echo "JWT_EXPIRES_IN=${{ secrets.JWT_EXPIRES_IN }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> .env
+          echo "TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}" >> .env
+          echo "TEST_USER=${{ secrets.TEST_USER }}" >> .env
           # Add other environment variables as needed
       - name: Run Playwright tests
         run: npm run mern-jobify-chrome
