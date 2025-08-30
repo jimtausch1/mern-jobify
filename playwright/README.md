@@ -10,6 +10,7 @@
 -npx playwright test --project=chromium --trace on
 -npx playwright test --project=chromium --debug
 -npx playwright test --ui
+-docker tag playwright-test jimtausch1/docker-repo:playwright-test
 -docker build -t mern-jobify-test .
 -docker-compose up --build
 

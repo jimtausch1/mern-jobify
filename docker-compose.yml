@@ -7,5 +7,5 @@ services:
       dockerfile: ./Dockerfile
     command: npm run mern-jobify-chrome-ci
     volumes:
-      - ./playwright-report/:/app/playwright-report
-      - ./test-results/:/app/test-results
+      - ./playwright/playwright-report/:/app/playwright-report
+      - ./playwright/test-results/:/app/test-results
