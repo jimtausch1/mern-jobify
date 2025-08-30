@@ -25,7 +25,7 @@ export class LoginPage extends BasePage {
   }
 
   private async goto() {
-    await this.page.goto('http://localhost:5000/');
+    await this.page.goto('/');
     await this.loginButton.click();
   }
 

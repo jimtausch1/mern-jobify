@@ -4,7 +4,7 @@ const testuser = process.env.TEST_USER as string;
 const testPassword = process.env.TEST_PASSWORD as string;
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('http://localhost:5000/');
+  await page.goto('/');
 });
 
 test.describe('login page', () => {
