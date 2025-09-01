@@ -33,7 +33,7 @@ jobs:
           MONGO_URL: ${{ secrets.MONGO_URL }}
           TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
           TEST_USER: ${{ secrets.TEST_USER }}
-        run: npm run mern-jobify-chrome-ci
+        run: npm run mern-jobify-chrome
       - name: Upload traces as artifacts (optional)
         uses: actions/upload-artifact@v4
         if: always()
