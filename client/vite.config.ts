@@ -9,6 +9,11 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/vitest.setup.ts',
+    coverage: {
+      enabled: true,
+      reporter: ['html'],
+      provider: 'istanbul', // or 'v8'
+    },
   },
   server: {
     port: 3000,

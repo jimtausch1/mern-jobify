@@ -2,11 +2,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter } from '../utils/RouterHelper';
+import { getMemoryRouter } from '../utils/TestHelper';
 import Landing from './Landing';
 
 describe('Landing Page', () => {
-  const router = getMemoryRouter('/', <Landing />);
+  const router = getMemoryRouter(['/'], <Landing />);
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -26,9 +26,11 @@ describe('Landing Page', () => {
     screen.debug();
 
     // Find heading by its text content
-    const loginLink = screen.getByText('Login / Demo User');
+    const loginLink = screen.getByRole('link', { name: /login/i });
+    const registerLink = screen.getByRole('link', { name: /register/i });
 
     // Verify heading exists in document
     expect(loginLink).toBeInTheDocument();
+    expect(registerLink).toBeInTheDocument();
   });
 });

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Form, Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
@@ -17,8 +16,8 @@ export default function Login() {
       await customFetch.post('/auth/login', data);
       toast.success('Take a test drive');
       navigate('/dashboard');
-    } catch (error: any) {
-      toast.error(error?.response?.data?.msg);
+    } catch {
+      // toast.error(error?.response?.data?.msg);
     }
   };
   return (
