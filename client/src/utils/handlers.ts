@@ -1,9 +1,13 @@
 import { http, HttpResponse } from 'msw';
-
-//  {"email":"test1@test.com","password":"secret123"}
+import { mockUser } from './mocks';
 
 export const handlers = [
   http.post('/api/v1/auth/login', () => {
     return HttpResponse.json({ msg: 'user logged in' });
+  }),
+  http.get('/api/v1/users/current-user', () => {
+    return HttpResponse.json({
+      mockUser,
+    });
   }),
 ];

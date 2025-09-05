@@ -5,6 +5,11 @@ import { server } from './utils/node';
 
 expect.extend(matchers);
 
+// the following is used for debugging msw handlers
+server.events.on('request:start', ({ request }) => {
+  console.log('Outgoing', request.method, request.url);
+});
+
 beforeAll(() => {
   server.listen();
 });

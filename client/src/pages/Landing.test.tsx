@@ -1,19 +1,12 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter } from '../utils/TestHelper';
+import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 import Landing from './Landing';
 
 describe('Landing Page', () => {
   const router = getMemoryRouter(['/'], <Landing />);
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5,
-      },
-    },
-  });
 
   it('should render heading with correct text', () => {
     render(
@@ -23,7 +16,7 @@ describe('Landing Page', () => {
     );
 
     // Log the DOM tree for debugging
-    screen.debug();
+    // screen.debug();
 
     // Find heading by its text content
     const loginLink = screen.getByRole('link', { name: /login/i });

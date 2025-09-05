@@ -11,12 +11,6 @@ import { toast } from 'react-toastify';
 
 vi.mock('react-toastify'); // This tells Vitest to use the mock in __mocks__/react-toastify.js
 
-// jest.mock('react-toastify', () => ({
-//   toast: {
-//     success: jest.fn(),
-//   },
-// }))
-
 describe('Login Page', () => {
   const router = getMemoryRouter(['/', '/dashboard'], <Login />);
   const user = userEvent.setup();
@@ -35,7 +29,7 @@ describe('Login Page', () => {
     );
 
     // Log the DOM tree for debugging
-    screen.debug();
+    // screen.debug();
 
     // Find heading by its text content
     const emailInput = screen.getByRole('textbox', { name: /email/i });
