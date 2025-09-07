@@ -10,7 +10,7 @@ export const handlers = [
       mockUser,
     });
   }),
-  http.get('jobs?search=&jobStatus=all&jobType=all&sort=newest', () => {
+  http.get('/api/v1/jobs', () => {
     return HttpResponse.json({
       mockJobsResponse,
     });
