@@ -1,0 +1,67 @@
+### Register User
+POST http://localhost:5000/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "Bubbles McLaughster",
+  "email": "test@test.com",
+  "password": "secret123",
+  "lastName": "Ticklebottom",
+  "location": "Giggle City"
+}
+
+### Login User
+POST http://localhost:5000/api/v1/auth/login
+content-type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "secret123"
+}
+
+### Logout User
+GET http://localhost:5000/api/v1/auth/logout
+
+### Get Current User
+GET http://localhost:5000/api/v1/users/current-user
+
+### Get Admin Stats
+GET http://localhost:5000/api/v1/users/admin/app-stats
+
+### Update User
+PATCH http://localhost:5000/api/v1/users/update-user
+Content-Type: application/json
+
+{
+  "company": "google",
+  "position": "engineers"
+}
+
+### Get All Jobs
+GET http://localhost:5000/api/v1/jobs
+
+### Get Single Jobs
+GET http://localhost:5000/api/v1/jobs/68bda219018abd58b68a333f
+
+### Creat Job
+POST http://localhost:5000/api/v1/jobs
+Content-Type: application/json
+
+{
+  "company": "facebook",
+  "position": "fullstack engineer",
+  "jobLocation": "alabama",
+  "jobStatus": "declined",
+  "jobType": "internship"
+}
+
+### Update Job
+PATCH http://localhost:5000/api/v1/jobs/6898dd626b91cccf9822bbad
+Content-Type: application/json
+
+{
+  "position": "frontend"
+}
+
+### Delete Job
+DELETE http://localhost:5000/api/v1/jobs/68bee9b6fd961872a611fd72
