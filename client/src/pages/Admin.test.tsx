@@ -4,9 +4,10 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import { loader as adminLoader } from '../actions/AdminLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
-import { mockJobsResponse, mockSearchParams } from '../utils/mocks';
-import AllJobs from './AllJobs';
+import { mockAdminResponse, mockUser } from '../utils/mocks';
+import Admin from './Admin';
 
 // Mock the 'react-router-dom' module to replace useNavigate
 vi.mock('react-router-dom', async () => {
@@ -14,7 +15,7 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => vi.fn(), // Return our mock function
-    useLoaderData: vi.fn(() => mockSearchParams),
+    useLoaderData: vi.fn(() => mockAdminResponse),
   };
 });
 
@@ -24,7 +25,7 @@ vi.mock('@tanstack/react-query', async () => {
   return {
     ...actual,
     useQuery: vi.fn(() => ({
-      data: mockJobsResponse,
+      data: mockUser,
       isLoading: false,
       isError: false,
     })),
@@ -36,9 +37,9 @@ vi.mock('@tanstack/react-query', async () => {
   };
 });
 
-describe('All Jobs Page', () => {
+describe('Admin Page', () => {
   it('should correctly render', async () => {
-    const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
+    const router = getMemoryRouter(['/admin'], <Admin />);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -52,15 +53,16 @@ describe('All Jobs Page', () => {
     // screen.debug(undefined, Infinity);
 
     // Find heading by its text content
-    const searchInput = screen.getByLabelText(/search/i);
-    const totalJobsFound = screen.getByText(/15 jobs found/);
-    // const allJobsLink = screen.getAllByText(/all jobs/i);
-    // const statsLink = screen.getAllByText(/stats/i);
-    // const profileLink = screen.getAllByText(/profile/i);
+    const searchInput = screen.getByText(/current users/i);
+    const totalJobsFound = screen.getByText(/total jobs/);
 
     // Verify heading exists in document
     expect(searchInput).toBeInTheDocument();
     expect(totalJobsFound).toBeInTheDocument();
-    // expect(profileLink[0]).toBeInTheDocument();
+  });
+
+  test('adminLoader returns expected data', async () => {
+    const data = await adminLoader();
+    expect(data).toEqual({ mockAdminResponse });
   });
 });

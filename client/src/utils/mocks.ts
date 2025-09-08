@@ -148,3 +148,5 @@ export const mockJobsResponse = {
     },
   ],
 };
+
+export const mockAdminResponse = { users: 2, jobs: 124 };
