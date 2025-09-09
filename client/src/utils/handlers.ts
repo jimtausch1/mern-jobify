@@ -1,5 +1,11 @@
 import { http, HttpResponse } from 'msw';
-import { mockAdminResponse, mockJobsResponse, mockStatsResponse, mockUser } from './mocks';
+import {
+  mockAdminResponse,
+  mockEditJobResponse,
+  mockJobsResponse,
+  mockStatsResponse,
+  mockUser,
+} from './mocks';
 
 export const handlers = [
   http.post('/api/v1/auth/login', () => {
@@ -10,6 +16,12 @@ export const handlers = [
       mockUser,
     });
   }),
+  http.get('/api/v1/jobs/stats', () => {
+    return HttpResponse.json({ mockStatsResponse });
+  }),
+  http.get('/api/v1/jobs/:id', () => {
+    return HttpResponse.json(mockEditJobResponse);
+  }),
   http.get('/api/v1/jobs', () => {
     return HttpResponse.json({
       mockJobsResponse,
@@ -17,9 +29,6 @@ export const handlers = [
   }),
   http.get('/api/v1/users/admin/app-stats', () => {
     return HttpResponse.json({ mockAdminResponse });
-  }),
-  http.get('/api/v1/jobs/stats', () => {
-    return HttpResponse.json({ mockStatsResponse });
   }),
   http.post('/api/v1/users/update-user', () => {
     return HttpResponse.json({ msg: 'update user' });

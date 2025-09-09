@@ -149,6 +149,21 @@ export const mockJobsResponse = {
   ],
 };
 
+export const mockEditJobResponse = {
+  job: {
+    _id: '68a0a8d08b1e93e7ab070004',
+    company: 'Voonder',
+    position: 'VP Marketing',
+    jobStatus: 'declined',
+    jobType: 'part-time',
+    jobLocation: 'Ołpiny',
+    createdBy: '689b56e9ef5ee87ce80f2905',
+    createdAt: '2025-07-31T18:53:06.000Z',
+    updatedAt: '2025-07-31T18:53:06.000Z',
+    __v: 0,
+  },
+};
+
 export const mockAdminResponse = { users: 2, jobs: 124 };
 
 export const mockStatsResponse = {
@@ -184,3 +199,5 @@ export const mockStatsResponse = {
     },
   ],
 };
+
+export const mockEditJobParams = { id: '68a0a8d08b1e93e7ab070004' };

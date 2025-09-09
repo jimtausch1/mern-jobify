@@ -58,7 +58,7 @@ describe('Stats Page', () => {
     );
 
     // Log the DOM tree for debugging
-    screen.debug(undefined, Infinity);
+    // screen.debug(undefined, Infinity);
 
     // Find heading by its text content
     const pendingApplications = screen.getByText(/pending applications/i);

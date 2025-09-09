@@ -61,7 +61,7 @@ describe('All Jobs Page', () => {
     expect(totalJobsFound).toBeInTheDocument();
   });
 
-  test('statsLoader returns expected data', async () => {
+  test('allJobsLoader returns expected data', async () => {
     const allJobsQueryFunction = allJobsLoader(queryClient);
     const params = Object.fromEntries([[mockSearchParams]]);
     if (Object.keys(params).length === 0) {
