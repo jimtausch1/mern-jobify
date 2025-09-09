@@ -150,3 +150,37 @@ export const mockJobsResponse = {
 };
 
 export const mockAdminResponse = { users: 2, jobs: 124 };
+
+export const mockStatsResponse = {
+  defaultStats: {
+    pending: 27,
+    interview: 42,
+    declined: 41,
+  },
+  monthlyApplications: [
+    {
+      date: 'Mar 23',
+      count: 6,
+    },
+    {
+      date: 'Apr 23',
+      count: 11,
+    },
+    {
+      date: 'May 23',
+      count: 9,
+    },
+    {
+      date: 'Jun 23',
+      count: 8,
+    },
+    {
+      date: 'Jul 23',
+      count: 2,
+    },
+    {
+      date: 'Sep 25',
+      count: 11,
+    },
+  ],
+};

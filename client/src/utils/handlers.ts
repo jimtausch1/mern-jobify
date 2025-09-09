@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockAdminResponse, mockJobsResponse, mockUser } from './mocks';
+import { mockAdminResponse, mockJobsResponse, mockStatsResponse, mockUser } from './mocks';
 
 export const handlers = [
   http.post('/api/v1/auth/login', () => {
@@ -17,5 +17,8 @@ export const handlers = [
   }),
   http.get('/api/v1/users/admin/app-stats', () => {
     return HttpResponse.json({ mockAdminResponse });
+  }),
+  http.get('/api/v1/jobs/stats', () => {
+    return HttpResponse.json({ mockStatsResponse });
   }),
 ];
