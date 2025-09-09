@@ -21,4 +21,7 @@ export const handlers = [
   http.get('/api/v1/jobs/stats', () => {
     return HttpResponse.json({ mockStatsResponse });
   }),
+  http.post('/api/v1/users/update-user', () => {
+    return HttpResponse.json({ msg: 'update user' });
+  }),
 ];

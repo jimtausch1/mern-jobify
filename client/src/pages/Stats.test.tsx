@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import { loader as statsLoader } from '../actions/StatsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
 import { mockStatsResponse } from '../utils/mocks';
 import Stats from './Stats';
@@ -57,7 +58,7 @@ describe('Stats Page', () => {
     );
 
     // Log the DOM tree for debugging
-    // screen.debug(undefined, Infinity);
+    screen.debug(undefined, Infinity);
 
     // Find heading by its text content
     const pendingApplications = screen.getByText(/pending applications/i);
@@ -68,5 +69,11 @@ describe('Stats Page', () => {
     expect(pendingApplications).toBeInTheDocument();
     expect(interviewsScheduled).toBeInTheDocument();
     expect(jobsDeclined).toBeInTheDocument();
+  });
+
+  test('statsLoader returns expected data', async () => {
+    const statsQueryFunction = statsLoader(queryClient);
+    const data = await statsQueryFunction();
+    expect(data).toEqual({ mockStatsResponse });
   });
 });

@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import { loader as allJobsLoader } from '../actions/AllJobsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
 import { mockJobsResponse, mockSearchParams } from '../utils/mocks';
 import AllJobs from './AllJobs';
@@ -54,13 +55,25 @@ describe('All Jobs Page', () => {
     // Find heading by its text content
     const searchInput = screen.getByLabelText(/search/i);
     const totalJobsFound = screen.getByText(/15 jobs found/);
-    // const allJobsLink = screen.getAllByText(/all jobs/i);
-    // const statsLink = screen.getAllByText(/stats/i);
-    // const profileLink = screen.getAllByText(/profile/i);
 
     // Verify heading exists in document
     expect(searchInput).toBeInTheDocument();
     expect(totalJobsFound).toBeInTheDocument();
-    // expect(profileLink[0]).toBeInTheDocument();
+  });
+
+  test('statsLoader returns expected data', async () => {
+    const allJobsQueryFunction = allJobsLoader(queryClient);
+    const params = Object.fromEntries([[mockSearchParams]]);
+    if (Object.keys(params).length === 0) {
+      params['search'] = '';
+      params['jobStatus'] = 'all';
+      params['jobType'] = 'all';
+      params['sort'] = 'newest';
+    }
+
+    const request = { url: 'http://localhost:5000/dashboard/all-jobs' } as Request;
+    const funcParam = { params: params, request: request, context: {} };
+    const data = await allJobsQueryFunction(funcParam);
+    expect(data).toEqual(mockSearchParams);
   });
 });
