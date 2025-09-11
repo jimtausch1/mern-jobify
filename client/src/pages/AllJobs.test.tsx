@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import userEvent from '@testing-library/user-event';
 import { loader as allJobsLoader } from '../actions/AllJobsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
 import { mockJobsResponse, mockSearchParams, mockSearchParamsTest } from '../utils/mocks';
@@ -39,6 +40,7 @@ vi.mock('@tanstack/react-query', async () => {
 
 describe('All Jobs Page', () => {
   const baseApiURL = 'http://localhost:5000/api/v1';
+  const user = userEvent.setup();
 
   it('should correctly render', async () => {
     const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
@@ -56,11 +58,20 @@ describe('All Jobs Page', () => {
 
     // Find heading by its text content
     const searchInput = screen.getByLabelText(/search/i);
-    const totalJobsFound = screen.getByText(/15 jobs found/);
+    const totalJobsFound = screen.getByText(/50 jobs found/);
 
     // Verify heading exists in document
     expect(searchInput).toBeInTheDocument();
     expect(totalJobsFound).toBeInTheDocument();
+
+    const nextPageButton = screen.getByText(/next/);
+    const prevPageButton = screen.getByText(/prev/);
+
+    expect(nextPageButton).toBeInTheDocument();
+    expect(prevPageButton).toBeInTheDocument();
+
+    await user.click(nextPageButton);
+    await user.click(prevPageButton);
   });
 
   test('allJobsLoader returns expected data', async () => {

@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import ErrorElement from './components/ErrorElement';
 import {
   AddJob,
   Admin,
@@ -75,13 +74,11 @@ const router = createBrowserRouter([
             path: 'stats',
             element: <Stats />,
             loader: statsLoader(queryClient),
-            errorElement: <ErrorElement />,
           },
           {
             path: 'all-jobs',
             element: <AllJobs />,
             loader: allJobsLoader(queryClient),
-            errorElement: <ErrorElement />,
           },
           {
             path: 'profile',

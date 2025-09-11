@@ -25,6 +25,9 @@ export const handlers = [
 
     return HttpResponse.json({ msg: 'user logged in' });
   }),
+  http.get('/api/v1/auth/logout', () => {
+    return HttpResponse.json(mockUser);
+  }),
   http.get('/api/v1/users/current-user', () => {
     return HttpResponse.json(mockUser);
   }),
@@ -73,8 +76,5 @@ export const handlers = [
   }),
   http.get('/api/v1/users/admin/app-stats', () => {
     return HttpResponse.json({ mockAdminResponse });
-  }),
-  http.post('/api/v1/users/update-user', () => {
-    return HttpResponse.json({ msg: 'update user' });
   }),
 ];

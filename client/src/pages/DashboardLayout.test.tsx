@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import userEvent from '@testing-library/user-event';
 import { loader as dashboardLoader } from '../actions/DashboardLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
 import { mockUser } from '../utils/mocks';
@@ -44,6 +45,7 @@ vi.mock('@tanstack/react-query', async () => {
 });
 
 describe('Dashboard Layout Page', () => {
+  const user = userEvent.setup();
   it('should correctly render', async () => {
     const router = getMemoryRouter(
       ['/', '/dashboard'],
@@ -72,6 +74,27 @@ describe('Dashboard Layout Page', () => {
     expect(allJobsLink[0]).toBeInTheDocument();
     expect(statsLink[0]).toBeInTheDocument();
     expect(profileLink[0]).toBeInTheDocument();
+
+    const userButton = screen.getByText(/john/i);
+    expect(userButton).toBeInTheDocument();
+    await user.click(userButton);
+
+    const logoutButton = screen.getByText(/logout/i);
+    expect(logoutButton).toBeInTheDocument();
+    await user.click(logoutButton);
+
+    const darkThemeButton = screen.getByTestId('moon-fill');
+    expect(darkThemeButton).toBeInTheDocument();
+    await user.click(darkThemeButton);
+
+    const lightThemeButton = screen.getByTestId('sun-fill');
+    expect(lightThemeButton).toBeInTheDocument();
+    await user.click(lightThemeButton);
+
+    const toggleSideBar = screen.getByTestId('toggle-sidebar');
+    expect(toggleSideBar).toBeInTheDocument();
+    await user.click(toggleSideBar);
+    await user.click(toggleSideBar);
   });
 
   it('should correctly render while loading', async () => {

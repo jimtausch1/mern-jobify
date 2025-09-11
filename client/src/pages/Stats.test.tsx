@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import userEvent from '@testing-library/user-event';
 import { loader as statsLoader } from '../actions/StatsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
 import { mockStatsResponse } from '../utils/mocks';
@@ -46,6 +47,7 @@ window.ResizeObserver =
   }));
 
 describe('Stats Page', () => {
+  const user = userEvent.setup();
   it('should correctly render', async () => {
     const router = getMemoryRouter(['/stats'], <Stats />);
 
@@ -69,6 +71,13 @@ describe('Stats Page', () => {
     expect(pendingApplications).toBeInTheDocument();
     expect(interviewsScheduled).toBeInTheDocument();
     expect(jobsDeclined).toBeInTheDocument();
+
+    const areaChartButton = screen.getByText(/area chart/i);
+    expect(areaChartButton).toBeInTheDocument();
+    await user.click(areaChartButton);
+
+    const barChartButton = screen.getByText(/bar chart/i);
+    expect(barChartButton).toBeInTheDocument();
   });
 
   test('statsLoader returns expected data', async () => {
