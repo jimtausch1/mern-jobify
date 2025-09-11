@@ -4,8 +4,9 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import { action as profileAction } from '../actions/ProfileAction';
 import { DashboardContext } from '../context/DashboardContext';
-import { mockUser } from '../utils/mocks';
+import { mockIdParams, mockRegisterUser, mockUser } from '../utils/mocks';
 import Profile from './Profile';
 
 // Mock the 'react-router-dom' module to replace useNavigate
@@ -39,6 +40,9 @@ vi.mock('@tanstack/react-query', async () => {
 
 describe('Profile Page', () => {
   // const user = userEvent.setup();
+  const url = 'http://localhost:5000/dashboard/profile';
+  const request = { url: url } as Request;
+
   it('should correctly render', async () => {
     const router = getMemoryRouter(['/profile'], <Profile />);
 
@@ -75,5 +79,35 @@ describe('Profile Page', () => {
     expect(emailInput).toBeInTheDocument();
     expect(locationInput).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
+  });
+
+  test('profileAction returns expected data', async () => {
+    const mockFormData = new FormData();
+    mockFormData.append('email', mockRegisterUser.email);
+    mockFormData.append('lastName', mockRegisterUser.lastName);
+    mockFormData.append('location', mockRegisterUser.location);
+    mockFormData.append('name', mockRegisterUser.name);
+    mockFormData.append('avatar', mockRegisterUser.name);
+    request.formData = async () => mockFormData;
+
+    const profileActionFunction = profileAction(queryClient);
+    const funcParam = { params: mockIdParams, request: request, context: {} };
+    await profileActionFunction(funcParam);
+  });
+
+  test('profileAction returns expected error', async () => {
+    const mockFormData = new FormData();
+    mockFormData.append('_id', '');
+    mockFormData.append('email', 'error');
+    mockFormData.append('lastName', mockRegisterUser.lastName);
+    mockFormData.append('location', mockRegisterUser.location);
+    mockFormData.append('name', mockRegisterUser.name);
+    mockFormData.append('role', mockRegisterUser.name);
+    mockFormData.append('avatar', '');
+    request.formData = async () => mockFormData;
+
+    const profileActionFunction = profileAction(queryClient);
+    const funcParam = { params: mockIdParams, request: request, context: {} };
+    await profileActionFunction(funcParam);
   });
 });

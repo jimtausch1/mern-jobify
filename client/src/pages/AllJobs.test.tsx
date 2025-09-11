@@ -6,7 +6,7 @@ import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import { loader as allJobsLoader } from '../actions/AllJobsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
-import { mockJobsResponse, mockSearchParams } from '../utils/mocks';
+import { mockJobsResponse, mockSearchParams, mockSearchParamsTest } from '../utils/mocks';
 import AllJobs from './AllJobs';
 
 // Mock the 'react-router-dom' module to replace useNavigate
@@ -38,6 +38,8 @@ vi.mock('@tanstack/react-query', async () => {
 });
 
 describe('All Jobs Page', () => {
+  const baseApiURL = 'http://localhost:5000/api/v1';
+
   it('should correctly render', async () => {
     const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
 
@@ -62,18 +64,19 @@ describe('All Jobs Page', () => {
   });
 
   test('allJobsLoader returns expected data', async () => {
-    const allJobsQueryFunction = allJobsLoader(queryClient);
-    const params = Object.fromEntries([[mockSearchParams]]);
-    if (Object.keys(params).length === 0) {
-      params['search'] = '';
-      params['jobStatus'] = 'all';
-      params['jobType'] = 'all';
-      params['sort'] = 'newest';
-    }
-
     const request = { url: 'http://localhost:5000/dashboard/all-jobs' } as Request;
-    const funcParam = { params: params, request: request, context: {} };
+    const funcParam = { params: mockSearchParams.searchParams, request: request, context: {} };
+    const allJobsQueryFunction = allJobsLoader(queryClient);
     const data = await allJobsQueryFunction(funcParam);
     expect(data).toEqual(mockSearchParams);
+  });
+
+  test('allJobsLoader returns expected data with params', async () => {
+    const url = `${baseApiURL}/jobs?search=vp&jobStatus=declined&jobType=part-time&sort=newest`;
+    const request = { url: url } as Request;
+    const funcParam = { params: mockSearchParamsTest.searchParams, request: request, context: {} };
+    const allJobsQueryFunction = allJobsLoader(queryClient);
+    const data = await allJobsQueryFunction(funcParam);
+    expect(data).toEqual(mockSearchParamsTest);
   });
 });

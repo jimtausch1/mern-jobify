@@ -12,11 +12,28 @@ export const mockUser = {
   },
 };
 
+export const mockRegisterUser = {
+  name: 'John',
+  email: 'test1@test.com',
+  lastName: 'Smith',
+  location: 'alabama',
+  password: '',
+};
+
 export const mockSearchParams: { searchParams: { [k: string]: string } } = {
   searchParams: {
     ['search']: '',
     ['jobStatus']: 'all',
     ['jobType']: 'all',
+    ['sort']: 'newest',
+  },
+};
+
+export const mockSearchParamsTest: { searchParams: { [k: string]: string } } = {
+  searchParams: {
+    ['search']: 'vp',
+    ['jobStatus']: 'declined',
+    ['jobType']: 'part-time',
     ['sort']: 'newest',
   },
 };
@@ -201,3 +218,4 @@ export const mockStatsResponse = {
 };
 
 export const mockEditJobParams = { id: '68a0a8d08b1e93e7ab070004' };
+export const mockIdParams = { id: '' };

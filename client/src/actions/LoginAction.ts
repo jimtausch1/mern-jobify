@@ -12,7 +12,6 @@ export const action =
     try {
       await customFetch.post('/auth/login', data);
       queryClient.invalidateQueries();
-      console.log('form data', data);
       toast.success('Login successful');
       return redirect('/dashboard');
     } catch (error: any) {

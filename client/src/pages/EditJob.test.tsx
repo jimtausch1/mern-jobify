@@ -5,6 +5,8 @@ import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
+import { action as deleteJobAction } from '../actions/DeleteJobAction';
+import { action as editJobAction } from '../actions/EditJobAction';
 import { loader as editJobLoader, singleJobQuery } from '../actions/EditJobLoader';
 import { DashboardContext } from '../context/DashboardContext';
 import { mockEditJobParams, mockEditJobResponse, mockUser } from '../utils/mocks';
@@ -39,6 +41,17 @@ vi.mock('@tanstack/react-query', async () => {
 });
 
 describe('Edit Job Page', () => {
+  const url = 'http://localhost:5000/api/v1/jobs';
+  const request = { url: url } as Request;
+
+  const mockFormData = new FormData();
+  mockFormData.append('company', mockEditJobResponse.job.company);
+  mockFormData.append('position', mockEditJobResponse.job.position);
+  mockFormData.append('jobLocation', mockEditJobResponse.job.jobLocation);
+  mockFormData.append('jobStatus', mockEditJobResponse.job.jobStatus);
+  mockFormData.append('jobType', mockEditJobResponse.job.jobType);
+  request.formData = async () => mockFormData;
+
   it('should correctly render', async () => {
     const router = getMemoryRouter(['/dashboard'], <EditJob />);
 
@@ -78,13 +91,49 @@ describe('Edit Job Page', () => {
   });
 
   test('editJobLoader returns expected data', async () => {
-    const allJobsQueryFunction = editJobLoader(queryClient);
-
-    const request = {
-      url: 'http://localhost:5000/api/v1/jobs/68c075322e2007e6bb7fba55',
-    } as Request;
+    const singleJobQueryFunction = editJobLoader(queryClient);
     const funcParam = { params: mockEditJobParams, request: request, context: {} };
-    await allJobsQueryFunction(funcParam);
+    await singleJobQueryFunction(funcParam);
+    const data = await queryClient.ensureQueryData(singleJobQuery(mockEditJobParams.id));
+    expect(data).toEqual(mockEditJobResponse);
+  });
+
+  test('editJobLoader returns expected error', async () => {
+    const singleJobQueryFunction = editJobLoader(queryClient);
+    const funcParam = { params: { id: 'error' }, request: request, context: {} };
+    await singleJobQueryFunction(funcParam);
+    const data = await queryClient.ensureQueryData(singleJobQuery(mockEditJobParams.id));
+    expect(data).toEqual(mockEditJobResponse);
+  });
+
+  test('editJobAction returns expected data', async () => {
+    const editJobActionFunction = editJobAction(queryClient);
+    const funcParam = { params: mockEditJobParams, request: request, context: {} };
+    await editJobActionFunction(funcParam);
+    const data = await queryClient.ensureQueryData(singleJobQuery(mockEditJobParams.id));
+    expect(data).toEqual(mockEditJobResponse);
+  });
+
+  test('editJobAction returns expected error', async () => {
+    const editJobActionFunction = editJobAction(queryClient);
+    const funcParam = { params: { id: 'error' }, request: request, context: {} };
+    await editJobActionFunction(funcParam);
+    const data = await queryClient.ensureQueryData(singleJobQuery(mockEditJobParams.id));
+    expect(data).toEqual(mockEditJobResponse);
+  });
+
+  test('deleteJobAction returns expected data', async () => {
+    const deleteJobActionFunction = deleteJobAction(queryClient);
+    const funcParam = { params: mockEditJobParams, request: request, context: {} };
+    await deleteJobActionFunction(funcParam);
+    const data = await queryClient.ensureQueryData(singleJobQuery(mockEditJobParams.id));
+    expect(data).toEqual(mockEditJobResponse);
+  });
+
+  test('deleteJobAction returns expected error', async () => {
+    const deleteJobActionFunction = deleteJobAction(queryClient);
+    const funcParam = { params: { id: 'error' }, request: request, context: {} };
+    await deleteJobActionFunction(funcParam);
     const data = await queryClient.ensureQueryData(singleJobQuery(mockEditJobParams.id));
     expect(data).toEqual(mockEditJobResponse);
   });

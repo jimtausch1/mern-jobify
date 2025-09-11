@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import { loader as dashboardLoader } from '../actions/DashboardLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
 import { mockUser } from '../utils/mocks';
 import DashboardLayout from './DashboardLayout';
@@ -103,5 +104,11 @@ describe('Dashboard Layout Page', () => {
     expect(allJobsLink[0]).toBeInTheDocument();
     expect(statsLink[0]).toBeInTheDocument();
     expect(profileLink[0]).toBeInTheDocument();
+  });
+
+  test('dashboardLoader returns expected data', async () => {
+    const userQueryFunction = dashboardLoader(queryClient);
+    const data = await userQueryFunction();
+    expect(data).toEqual(mockUser);
   });
 });

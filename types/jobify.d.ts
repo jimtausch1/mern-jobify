@@ -4,6 +4,11 @@ declare namespace Express {
   }
 }
 
+type LoginRequest = {
+  email: string;
+  password: string;
+};
+
 type JobModel = {
   _id: string;
   company: string;

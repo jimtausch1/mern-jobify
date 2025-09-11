@@ -5,14 +5,7 @@ import customFetch from '../utils/customFetch';
 export const allJobsQuery = (params: { [k: string]: string }) => {
   const { search, jobStatus, jobType, sort, page } = params;
   return {
-    queryKey: [
-      'jobs',
-      search ?? '',
-      jobStatus ?? 'all',
-      jobType ?? 'all',
-      sort ?? 'newest',
-      page ?? 1,
-    ],
+    queryKey: ['jobs', search, jobStatus, jobType, sort, page ?? 1],
     queryFn: async () => {
       const { data } = await customFetch.get('/jobs', {
         params,

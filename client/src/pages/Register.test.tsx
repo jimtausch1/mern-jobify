@@ -3,12 +3,16 @@ import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { expect, it } from 'vitest';
+import { action as registerAction } from '../actions/RegisterAction';
 import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
+import { mockRegisterUser } from '../utils/mocks';
 import Register from './Register';
 
 describe('Register Page', () => {
   const router = getMemoryRouter(['/', '/dashboard'], <Register />);
+  const url = 'http://localhost:5000/register';
+  const request = { url: url } as Request;
 
   beforeEach(() => {
     // Clear mock calls before each test to ensure isolation
@@ -41,5 +45,29 @@ describe('Register Page', () => {
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
+  });
+
+  test('registerAction returns expected data', async () => {
+    const mockFormData = new FormData();
+    mockFormData.append('email', mockRegisterUser.email);
+    mockFormData.append('lastName', mockRegisterUser.lastName);
+    mockFormData.append('location', mockRegisterUser.location);
+    mockFormData.append('name', mockRegisterUser.name);
+    mockFormData.append('password', mockRegisterUser.password);
+    request.formData = async () => mockFormData;
+
+    await registerAction({ request });
+  });
+
+  test('registerAction returns expected error', async () => {
+    const mockFormData = new FormData();
+    mockFormData.append('email', 'error');
+    mockFormData.append('lastName', mockRegisterUser.lastName);
+    mockFormData.append('location', mockRegisterUser.location);
+    mockFormData.append('name', mockRegisterUser.name);
+    mockFormData.append('password', mockRegisterUser.password);
+    request.formData = async () => mockFormData;
+
+    await registerAction({ request });
   });
 });
