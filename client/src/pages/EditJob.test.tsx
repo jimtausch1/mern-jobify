@@ -2,15 +2,16 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import { action as deleteJobAction } from '../actions/DeleteJobAction';
 import { action as editJobAction } from '../actions/EditJobAction';
 import { loader as editJobLoader, singleJobQuery } from '../actions/EditJobLoader';
 import { DashboardContext } from '../context/DashboardContext';
-import { mockEditJobParams, mockEditJobResponse, mockUser } from '../utils/mocks';
+import { getMemoryRouter, mockEditJobResponse, mockUser, queryClient } from '../utils';
 import EditJob from './EditJob';
+
+const mockEditJobParams = { id: '68a0a8d08b1e93e7ab070004' };
 
 // Mock the 'react-router-dom' module to replace useNavigate
 vi.mock('react-router-dom', async () => {

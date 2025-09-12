@@ -2,12 +2,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import userEvent from '@testing-library/user-event';
 import { loader as dashboardLoader } from '../actions/DashboardLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
-import { mockUser } from '../utils/mocks';
+import { getMemoryRouter, mockUser, queryClient } from '../utils';
 import DashboardLayout from './DashboardLayout';
 
 // Define a variable to hold the mock location state

@@ -2,7 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
+import { getMemoryRouter, queryClient } from '../utils';
 import Landing from './Landing';
 
 describe('Landing Page', () => {

@@ -2,7 +2,7 @@
 import type { QueryClient } from '@tanstack/react-query';
 import { redirect, type LoaderFunctionArgs } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import customFetch from '../utils/customFetch';
+import { customFetch } from '../utils';
 
 export const singleJobQuery = (id: string) => {
   return {

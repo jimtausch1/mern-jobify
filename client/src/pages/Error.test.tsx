@@ -3,12 +3,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider, useRouteError } from 'react-router-dom';
 import { expect, it, type Mock } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 // import userEvent from '@testing-library/user-event';
 import { DashboardContext } from '../context/DashboardContext';
 import { Error as ErrorPage } from '../pages';
-import { mockUser } from '../utils/mocks';
+import { getMemoryRouter, mockUser, queryClient } from '../utils';
 
 // const profileAction = vi.fn(() => ({ message: 'update user' })); // Mock the action's return value
 

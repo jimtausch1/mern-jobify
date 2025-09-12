@@ -2,12 +2,11 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import userEvent from '@testing-library/user-event';
 import { loader as statsLoader } from '../actions/StatsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
-import { mockStatsResponse } from '../utils/mocks';
+import { getMemoryRouter, mockStatsResponse, queryClient } from '../utils';
 import Stats from './Stats';
 
 // Mock the 'react-router-dom' module to replace useNavigate

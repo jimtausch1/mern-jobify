@@ -5,11 +5,10 @@ import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { expect, it } from 'vitest';
 import { action as loginAction } from '../actions/LoginAction';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 import Login from './Login';
 
 import { toast } from 'react-toastify';
-import { mockIdParams, mockUser } from '../utils/mocks';
+import { getMemoryRouter, mockIdParams, mockUser, queryClient } from '../utils';
 
 vi.mock('react-toastify'); // This tells Vitest to use the mock in __mocks__/react-toastify.js
 

@@ -3,8 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { userQuery } from '../actions/DashboardLoader';
-import { checkDefaultTheme } from '../utils/CheckDefaultTheme';
-import customFetch from '../utils/customFetch';
+import { checkDefaultTheme, customFetch } from '../utils';
 import { DashboardContext } from './DashboardContext';
 
 interface DashboardProviderProps {

@@ -1,25 +1,14 @@
-import type { ChangeEvent } from 'react';
 import { Form, Link, useSubmit } from 'react-router-dom';
 import { FormRow, FormRowSelect } from '.';
 import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { useAllJobsContext } from '../context/AllJobsContext';
+import { debounce } from '../utils/debounce';
 
 export default function SearchContainer() {
   const { searchParams } = useAllJobsContext();
   const { search, jobStatus, jobType, sort } = searchParams;
   const submit = useSubmit();
-
-  const debounce = (onChange: (form: HTMLFormElement) => void) => {
-    let timeout: NodeJS.Timeout;
-    return (e: ChangeEvent<HTMLInputElement>) => {
-      const form = e.currentTarget.form;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        onChange(form!);
-      }, 2000);
-    };
-  };
 
   return (
     <Wrapper>

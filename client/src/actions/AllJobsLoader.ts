@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import type { LoaderFunctionArgs } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
+import { customFetch } from '../utils';
 
 export const allJobsQuery = (params: { [k: string]: string }) => {
   const { search, jobStatus, jobType, sort, page } = params;

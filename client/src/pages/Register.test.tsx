@@ -4,9 +4,8 @@ import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { expect, it } from 'vitest';
 import { action as registerAction } from '../actions/RegisterAction';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
-import { mockRegisterUser } from '../utils/mocks';
+import { getMemoryRouter, mockRegisterUser, queryClient } from '../utils';
 import Register from './Register';
 
 describe('Register Page', () => {

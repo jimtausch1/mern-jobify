@@ -2,11 +2,10 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import { action as profileAction } from '../actions/ProfileAction';
 import { DashboardContext } from '../context/DashboardContext';
-import { mockIdParams, mockRegisterUser, mockUser } from '../utils/mocks';
+import { getMemoryRouter, mockIdParams, mockRegisterUser, mockUser, queryClient } from '../utils';
 import Profile from './Profile';
 
 // Mock the 'react-router-dom' module to replace useNavigate

@@ -2,13 +2,18 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
 
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import { action as addJobAction } from '../actions/AddJobAction';
 import { singleJobQuery } from '../actions/EditJobLoader';
 import { DashboardContext } from '../context/DashboardContext';
-import { mockEditJobParams, mockEditJobResponse, mockUser } from '../utils/mocks';
+import {
+  getMemoryRouter,
+  mockEditJobParams,
+  mockEditJobResponse,
+  mockUser,
+  queryClient,
+} from '../utils';
 import AddJob from './AddJob';
 
 describe('Add Job Page', () => {
@@ -36,7 +41,7 @@ describe('Add Job Page', () => {
     );
 
     // Log the DOM tree for debugging
-    // screen.debug(undefined, Infinity);
+    screen.debug(undefined, Infinity);
 
     // Find heading by its text content
     const positionInput = screen.getByLabelText(/position/i);

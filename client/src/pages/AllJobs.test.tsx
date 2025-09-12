@@ -2,12 +2,13 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils/TestHelper';
+import { getMemoryRouter, queryClient } from '../utils';
 
 import userEvent from '@testing-library/user-event';
+import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import { loader as allJobsLoader } from '../actions/AllJobsLoader';
 import { DashboardProvider } from '../context/DashboardProvider';
-import { mockJobsResponse, mockSearchParams, mockSearchParamsTest } from '../utils/mocks';
+import { mockJobsResponse, mockSearchParams, mockSearchParamsTest } from '../utils';
 import AllJobs from './AllJobs';
 
 // Mock the 'react-router-dom' module to replace useNavigate
@@ -72,6 +73,69 @@ describe('All Jobs Page', () => {
 
     await user.click(nextPageButton);
     await user.click(prevPageButton);
+  });
+
+  it('should correctly filter jobs', async () => {
+    const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <DashboardProvider queryClient={queryClient}>
+          <RouterProvider router={router} />
+        </DashboardProvider>
+      </QueryClientProvider>
+    );
+
+    // Log the DOM tree for debugging
+    // screen.debug(undefined, Infinity);
+
+    // Find heading by its text content
+    const searchInput = screen.getByLabelText(/search/i);
+    const totalJobsFound = screen.getByText(/50 jobs found/);
+
+    // Verify heading exists in document
+    expect(searchInput).toBeInTheDocument();
+    expect(totalJobsFound).toBeInTheDocument();
+
+    const jobStatusSelect = screen.getByLabelText(/job status/i);
+    const jobTypeSelect = screen.getByLabelText(/job Type/i);
+    const sortInputSelect = screen.getByLabelText(/sort/i);
+
+    expect(jobStatusSelect).toBeInTheDocument();
+    expect(jobTypeSelect).toBeInTheDocument();
+    expect(sortInputSelect).toBeInTheDocument();
+
+    await user.selectOptions(jobStatusSelect, JOB_STATUS.INTERVIEW);
+    await user.selectOptions(jobTypeSelect, JOB_TYPE.INTERNSHIP);
+    await user.selectOptions(sortInputSelect, JOB_SORT_BY.DESCENDING);
+  });
+
+  it('should correctly filter jobs by search', async () => {
+    const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <DashboardProvider queryClient={queryClient}>
+          <RouterProvider router={router} />
+        </DashboardProvider>
+      </QueryClientProvider>
+    );
+
+    // Log the DOM tree for debugging
+    // screen.debug(undefined, Infinity);
+
+    // Find heading by its text content
+    const searchInput = screen.getByLabelText(/search/i);
+    const totalJobsFound = screen.getByText(/50 jobs found/);
+
+    // Verify heading exists in document
+    expect(searchInput).toBeInTheDocument();
+    expect(totalJobsFound).toBeInTheDocument();
+
+    vi.useFakeTimers({ toFake: ['setTimeout'] });
+    vi.advanceTimersByTimeAsync(5000);
+    await user.type(searchInput, 'vp');
+    vi.useRealTimers();
   });
 
   test('allJobsLoader returns expected data', async () => {

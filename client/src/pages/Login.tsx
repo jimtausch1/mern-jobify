@@ -2,7 +2,7 @@ import { Form, Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
 import { FormRow, Logo, SubmitBtn } from '../components';
-import customFetch from '../utils/customFetch';
+import { customFetch } from '../utils';
 
 export default function Login() {
   const navigate = useNavigate();

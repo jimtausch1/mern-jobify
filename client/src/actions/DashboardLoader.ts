@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { redirect } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
+import { customFetch } from '../utils';
 
 export const userQuery = {
   queryKey: ['user'],

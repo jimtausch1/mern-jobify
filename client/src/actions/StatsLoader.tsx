@@ -1,5 +1,5 @@
 import type { QueryClient } from '@tanstack/react-query';
-import customFetch from '../utils/customFetch';
+import { customFetch } from '../utils';
 
 export const statsQuery = {
   queryKey: ['stats'],
