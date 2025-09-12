@@ -1,4 +1,4 @@
-export * from './checkDefaultTheme';
+export * from './checkTheme';
 export * from './customFetch';
 export * from './debounce';
 export * from './handlers';
