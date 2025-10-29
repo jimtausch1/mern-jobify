@@ -41,7 +41,7 @@ describe('Add Job Page', () => {
     );
 
     // Log the DOM tree for debugging
-    screen.debug(undefined, Infinity);
+    // screen.debug(undefined, Infinity);
 
     // Find heading by its text content
     const positionInput = screen.getByLabelText(/position/i);
