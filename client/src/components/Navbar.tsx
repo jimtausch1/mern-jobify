@@ -1,16 +1,18 @@
-import { FaAlignLeft } from "react-icons/fa";
-import Wrapper from "../assets/wrappers/Navbar";
-import { useDashboardContext } from "../context/DashboardContext";
-import Logo from "./Logo";
-import LogoutContainer from "./LogoutContainer";
-import ThemeToggle from "./ThemeToggle";
+import { FaAlignLeft } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import Wrapper from '../assets/wrappers/Navbar';
+import { toggleSidebar } from '../slices/dashboardSlice';
+import Logo from './Logo';
+import LogoutContainer from './LogoutContainer';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar() {
-  const { toggleSidebar } = useDashboardContext();
+  const dispatch = useDispatch();
+
   return (
     <Wrapper>
       <div className="nav-center">
-        <button type="button" className="toggle-btn" onClick={toggleSidebar}>
+        <button type="button" className="toggle-btn" onClick={() => dispatch(toggleSidebar())}>
           <FaAlignLeft />
         </button>
         <div>

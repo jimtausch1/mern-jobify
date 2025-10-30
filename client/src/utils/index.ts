@@ -1,5 +1,5 @@
-export * from './checkTheme';
 export * from './customFetch';
+export * from './dashboard';
 export * from './debounce';
 export * from './handlers';
 export * from './links';

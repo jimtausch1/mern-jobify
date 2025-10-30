@@ -1,18 +1,15 @@
-import Wrapper from "../assets/wrappers/BigSidebar";
-import { useDashboardContext } from "../context/DashboardContext";
-import Logo from "./Logo";
-import NavLinks from "./NavLinks";
+import { useSelector } from 'react-redux';
+import Wrapper from '../assets/wrappers/BigSidebar';
+import type { RootState } from '../store';
+import Logo from './Logo';
+import NavLinks from './NavLinks';
 
 export default function BigSidebar() {
-  const { showSidebar } = useDashboardContext();
+  const showSidebar = useSelector((state: RootState) => state.dashboard.showSidebar);
 
   return (
     <Wrapper>
-      <div
-        className={
-          showSidebar ? "sidebar-container " : "sidebar-container show-sidebar"
-        }
-      >
+      <div className={showSidebar ? 'sidebar-container show-sidebar' : 'sidebar-container'}>
         <div className="content">
           <header>
             <Logo />

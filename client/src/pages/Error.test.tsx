@@ -39,8 +39,6 @@ describe('Error Page', () => {
           value={{
             user: mockUser.user,
             showSidebar: true,
-            isDarkTheme: false,
-            toggleDarkTheme: () => {},
             toggleSidebar: () => {},
             logoutUser: () => {},
           }}
@@ -73,8 +71,6 @@ describe('Error Page', () => {
           value={{
             user: mockUser.user,
             showSidebar: true,
-            isDarkTheme: false,
-            toggleDarkTheme: () => {},
             toggleSidebar: () => {},
             logoutUser: () => {},
           }}

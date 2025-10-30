@@ -6,9 +6,9 @@ import Job from '../models/JobModel.js';
 import User from '../models/UserModel.js';
 
 export const getCurrentUser = async (req: Request, res: Response) => {
-  const user = await User.findOne({ _id: req.user.userId });
-  const userWithoutPassword = user?.toJSON();
-  res.status(StatusCodes.OK).json({ user: userWithoutPassword });
+  const response = await User.findOne({ _id: req.user.userId });
+  const user = response?.toJSON();
+  res.status(StatusCodes.OK).json(user);
 };
 export const getApplicationStats = async (req: Request, res: Response) => {
   const users = await User.countDocuments();

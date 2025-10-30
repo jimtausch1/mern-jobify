@@ -13,10 +13,6 @@ describe('Logout Container', () => {
       <DashboardContext.Provider
         value={{
           user: testUser,
-          showSidebar: true,
-          isDarkTheme: false,
-          toggleDarkTheme: () => {},
-          toggleSidebar: () => {},
           logoutUser: () => {},
         }}
       >

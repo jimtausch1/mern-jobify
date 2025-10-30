@@ -29,8 +29,6 @@ describe('Add Job Page', () => {
           value={{
             user: mockUser.user,
             showSidebar: true,
-            isDarkTheme: false,
-            toggleDarkTheme: () => {},
             toggleSidebar: () => {},
             logoutUser: () => {},
           }}

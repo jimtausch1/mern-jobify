@@ -1,12 +1,13 @@
 import { FaTimes } from 'react-icons/fa';
 import Wrapper from '../assets/wrappers/SmallSidebar';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { toggleSidebar } from '../slices/dashboardSlice';
 import Logo from './Logo';
-
-import { useDashboardContext } from '../context/DashboardContext';
 import NavLinks from './NavLinks';
 
 export default function SmallSidebar() {
-  const { showSidebar, toggleSidebar } = useDashboardContext();
+  const showSidebar = useAppSelector((state) => state.dashboard.showSidebar);
+  const dispatch = useAppDispatch();
 
   return (
     <Wrapper>
@@ -16,7 +17,7 @@ export default function SmallSidebar() {
             type="button"
             className="close-btn"
             data-testid="toggle-sidebar"
-            onClick={toggleSidebar}
+            onClick={() => dispatch(toggleSidebar())}
           >
             <FaTimes />
           </button>

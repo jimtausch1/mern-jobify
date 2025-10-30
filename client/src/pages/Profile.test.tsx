@@ -51,8 +51,6 @@ describe('Profile Page', () => {
           value={{
             user: mockUser.user,
             showSidebar: true,
-            isDarkTheme: false,
-            toggleDarkTheme: () => {},
             toggleSidebar: () => {},
             logoutUser: () => {},
           }}

@@ -2,10 +2,11 @@ import { Form } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, FormRowSelect, SubmitBtn } from '../components';
-import { useDashboardContext } from '../context/DashboardContext';
+import { useGetCurrentUserQuery } from '../slices/jobifyApiSlice';
 
 export default function AddJob() {
-  const { user } = useDashboardContext();
+  const { data } = useGetCurrentUserQuery('bulbasaur');
+  const user = data ?? ({} as UserModel);
 
   return (
     <Wrapper>
