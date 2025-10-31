@@ -1,12 +1,12 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 
 import userEvent from '@testing-library/user-event';
-import { loader as statsLoader } from '../actions/StatsLoader';
-import { DashboardProvider } from '../context/DashboardProvider';
-import { getMemoryRouter, mockStatsResponse, queryClient } from '../utils';
+import { Provider } from 'react-redux';
+import { loader as statsLoader } from '../../actions/StatsLoader';
+import { store } from '../../store';
+import { getMemoryRouter, mockStatsResponse } from '../../utils';
 import Stats from './Stats';
 
 // Mock the 'react-router-dom' module to replace useNavigate
@@ -15,25 +15,6 @@ vi.mock('react-router-dom', async () => {
   return {
     ...actual,
     useNavigate: () => vi.fn(), // Return our mock function
-    useLoaderData: vi.fn(() => mockStatsResponse),
-  };
-});
-
-// Mock useQuery/useSuspenseQuery to return specific data
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query');
-  return {
-    ...actual,
-    useQuery: vi.fn(() => ({
-      data: mockStatsResponse,
-      isLoading: false,
-      isError: false,
-    })),
-    useSuspenseQuery: vi.fn(() => ({
-      data: {
-        /* your mocked query data */
-      },
-    })),
   };
 });
 
@@ -51,18 +32,16 @@ describe('Stats Page', () => {
     const router = getMemoryRouter(['/stats'], <Stats />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardProvider queryClient={queryClient}>
-          <RouterProvider router={router} />
-        </DashboardProvider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging
     // screen.debug(undefined, Infinity);
 
     // Find heading by its text content
-    const pendingApplications = screen.getByText(/pending applications/i);
+    const pendingApplications = await screen.findByText(/pending applications/i);
     const interviewsScheduled = screen.getByText(/interviews scheduled/i);
     const jobsDeclined = screen.getByText(/jobs declined/);
 
@@ -80,8 +59,7 @@ describe('Stats Page', () => {
   });
 
   test('statsLoader returns expected data', async () => {
-    const statsQueryFunction = statsLoader(queryClient);
-    const data = await statsQueryFunction();
-    expect(data).toEqual({ mockStatsResponse });
+    const data = await statsLoader();
+    expect(data).toEqual(mockStatsResponse);
   });
 });

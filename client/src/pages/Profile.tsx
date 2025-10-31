@@ -1,11 +1,10 @@
 import { Form } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, SubmitBtn } from '../components';
-import { useGetCurrentUserQuery } from '../slices/jobifyApiSlice';
+import { useAppSelector } from '../hooks';
 
 export default function Profile() {
-  const { data } = useGetCurrentUserQuery('bulbasaur');
-  const user = data ?? ({} as UserModel);
+  const user = useAppSelector((state) => state.dashboard.currentUser);
   const { name, lastName, email, location } = user;
 
   return (

@@ -1,19 +1,16 @@
-import { QueryClient } from '@tanstack/react-query';
-import { redirect } from 'react-router-dom';
-import { customFetch } from '../utils';
+import { dashboardSlice } from '../slices/dashboardSlice';
+import { jobifyApi } from '../slices/jobifyApiSlice';
+import { store } from '../store';
 
-export const userQuery = {
-  queryKey: ['user'],
-  queryFn: async () => {
-    const { data } = await customFetch.get('/users/current-user');
-    return data;
-  },
-};
-
-export const loader = (queryClient: QueryClient) => async () => {
+export const loader = async () => {
+  const queryPromise = store.dispatch(jobifyApi.endpoints.getCurrentUser.initiate());
   try {
-    return await queryClient.ensureQueryData(userQuery);
-  } catch {
-    return redirect('/');
+    const response = await queryPromise.unwrap();
+    const loadPromise = store.dispatch(dashboardSlice.actions.loadUser(response));
+    return loadPromise.payload;
+  } catch (error) {
+    console.error('Failed to fetch jobs', error);
+  } finally {
+    queryPromise.unsubscribe();
   }
 };

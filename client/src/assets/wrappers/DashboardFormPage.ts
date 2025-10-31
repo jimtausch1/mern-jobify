@@ -7,6 +7,7 @@ const Wrapper = styled.section`
   padding: 3rem 2rem 4rem;
   .form-title {
     margin-bottom: 2rem;
+    text-transform: capitalize;
   }
   .form {
     margin: 0;

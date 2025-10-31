@@ -35,7 +35,7 @@ export const handlers = [
     return HttpResponse.json(mockUser);
   }),
   http.get('/api/v1/jobs/stats', () => {
-    return HttpResponse.json({ mockStatsResponse });
+    return HttpResponse.json(mockStatsResponse);
   }),
   http.get('/api/v1/jobs/:id', ({ params }) => {
     if (params.id === 'error') {
@@ -59,9 +59,7 @@ export const handlers = [
     return HttpResponse.json(mockEditJobResponse);
   }),
   http.get('/api/v1/jobs', () => {
-    return HttpResponse.json({
-      mockJobsResponse,
-    });
+    return HttpResponse.json(mockJobsResponse);
   }),
   http.post('/api/v1/jobs', async ({ request }) => {
     const data = (await request.json()) as JobModel;

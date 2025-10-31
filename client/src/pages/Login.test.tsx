@@ -1,4 +1,3 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { RouterProvider } from 'react-router-dom';
@@ -7,8 +6,10 @@ import { expect, it } from 'vitest';
 import { action as loginAction } from '../actions/LoginAction';
 import Login from './Login';
 
+import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getMemoryRouter, mockIdParams, mockUser, queryClient } from '../utils';
+import { store } from '../store';
+import { getMemoryRouter, mockIdParams, mockUser } from '../utils';
 
 vi.mock('react-toastify'); // This tells Vitest to use the mock in __mocks__/react-toastify.js
 
@@ -20,10 +21,10 @@ describe('Login Page', () => {
 
   it('should correctly login with default user', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <ToastContainer position="top-center" />
         <RouterProvider router={router} />
-      </QueryClientProvider>
+      </Provider>
     );
 
     // Log the DOM tree for debugging
@@ -46,26 +47,22 @@ describe('Login Page', () => {
   });
 
   test('loginAction returns expected data', async () => {
-    const loginActionFunction = loginAction(queryClient);
-
     const mockFormData = new FormData();
     mockFormData.append('email', mockUser.user.email);
     mockFormData.append('password', '');
     request.formData = async () => mockFormData;
 
     const funcParam = { params: mockIdParams, request: request, context: {} };
-    await loginActionFunction(funcParam);
+    await loginAction(funcParam);
   });
 
   test('loginAction returns expected data', async () => {
-    const loginActionFunction = loginAction(queryClient);
-
     const mockFormData = new FormData();
     mockFormData.append('email', 'error');
     mockFormData.append('password', '');
     request.formData = async () => mockFormData;
 
     const funcParam = { params: mockIdParams, request: request, context: {} };
-    await loginActionFunction(funcParam);
+    await loginAction(funcParam);
   });
 });

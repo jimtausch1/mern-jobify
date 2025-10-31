@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { toggleSidebar } from '../slices/dashboardSlice';
-import { useGetCurrentUserQuery } from '../slices/jobifyApiSlice';
 import { links } from '../utils';
 
 interface NavLinksProps {
@@ -10,8 +9,7 @@ interface NavLinksProps {
 
 export default function NavLinks({ isBigSidebar }: NavLinksProps) {
   // Using a query hook automatically fetches data and returns query values
-  const { data } = useGetCurrentUserQuery('bulbasaur');
-  const user = data ?? ({} as UserModel);
+  const user = useAppSelector((state) => state.dashboard.currentUser);
   const dispatch = useAppDispatch();
 
   return (

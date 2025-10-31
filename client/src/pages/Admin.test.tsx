@@ -1,11 +1,11 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 
+import { Provider } from 'react-redux';
 import { loader as adminLoader } from '../actions/AdminLoader';
-import { DashboardProvider } from '../context/DashboardProvider';
-import { getMemoryRouter, mockAdminResponse, mockUser, queryClient } from '../utils';
+import { store } from '../store';
+import { getMemoryRouter, mockAdminResponse } from '../utils';
 import Admin from './Admin';
 
 // Mock the 'react-router-dom' module to replace useNavigate
@@ -18,34 +18,14 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Mock useQuery/useSuspenseQuery to return specific data
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query');
-  return {
-    ...actual,
-    useQuery: vi.fn(() => ({
-      data: mockUser,
-      isLoading: false,
-      isError: false,
-    })),
-    useSuspenseQuery: vi.fn(() => ({
-      data: {
-        /* your mocked query data */
-      },
-    })),
-  };
-});
-
 describe('Admin Page', () => {
   it('should correctly render', async () => {
     const router = getMemoryRouter(['/admin'], <Admin />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardProvider queryClient={queryClient}>
-          <RouterProvider router={router} />
-        </DashboardProvider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging

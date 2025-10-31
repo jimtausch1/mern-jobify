@@ -2,11 +2,10 @@ import { Form } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, FormRowSelect, SubmitBtn } from '../components';
-import { useGetCurrentUserQuery } from '../slices/jobifyApiSlice';
+import { useAppSelector } from '../hooks';
 
 export default function AddJob() {
-  const { data } = useGetCurrentUserQuery('bulbasaur');
-  const user = data ?? ({} as UserModel);
+  const user = useAppSelector((state) => state.dashboard.currentUser);
 
   return (
     <Wrapper>

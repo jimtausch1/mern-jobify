@@ -1,9 +1,9 @@
-import day from "dayjs";
-import advancedFormat from "dayjs/plugin/advancedFormat";
-import { FaBriefcase, FaCalendarAlt, FaLocationArrow } from "react-icons/fa";
-import { Form, Link } from "react-router-dom";
-import Wrapper from "../assets/wrappers/Job";
-import JobInfo from "./JobInfo";
+import day from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import { FaBriefcase, FaCalendarAlt, FaLocationArrow } from 'react-icons/fa';
+import { Form, Link } from 'react-router-dom';
+import Wrapper from '../../assets/wrappers/Job';
+import JobInfo from './JobInfo';
 day.extend(advancedFormat);
 
 interface JobProps {
@@ -25,7 +25,7 @@ export default function Job({
   createdAt,
   jobStatus,
 }: JobProps) {
-  const date = day(createdAt).format("MMM Do, YYYY");
+  const date = day(createdAt).format('MMM Do, YYYY');
   return (
     <Wrapper>
       <header>

@@ -1,11 +1,12 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { expect, it } from 'vitest';
 import { action as registerAction } from '../actions/RegisterAction';
 
-import { getMemoryRouter, mockRegisterUser, queryClient } from '../utils';
+import { Provider } from 'react-redux';
+import { store } from '../store';
+import { getMemoryRouter, mockRegisterUser } from '../utils';
 import Register from './Register';
 
 describe('Register Page', () => {
@@ -20,10 +21,10 @@ describe('Register Page', () => {
 
   it('should correctly login with default user', async () => {
     render(
-      <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <ToastContainer position="top-center" />
         <RouterProvider router={router} />
-      </QueryClientProvider>
+      </Provider>
     );
 
     // Log the DOM tree for debugging

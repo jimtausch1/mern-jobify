@@ -1,7 +1,8 @@
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/PageBtnContainer';
-import { useAllJobsContext } from '../context/AllJobsContext';
+import Wrapper from '../../assets/wrappers/PageBtnContainer';
+import { useAppSelector } from '../../hooks';
+import { useGetAllJobsQuery } from '../../slices/jobifyApiSlice';
 
 interface AddPageButtonProps {
   pageNumber: number;
@@ -9,9 +10,10 @@ interface AddPageButtonProps {
 }
 
 export default function PageBtnContainer() {
-  const {
-    data: { numOfPages, currentPage },
-  } = useAllJobsContext();
+  const searchParams = useAppSelector((state) => state.dashboard.searchParams);
+  const { data } = useGetAllJobsQuery(searchParams);
+  const response = data ?? ({} as AllJobsResponse);
+  const { numOfPages, currentPage } = response;
 
   // const pages = Array.from({ length: numOfPages }, (_, index) => {
   //   return index + 1;
@@ -117,7 +119,7 @@ export default function PageBtnContainer() {
         onClick={() => {
           let nextPage = currentPage + 1;
           if (nextPage > numOfPages) nextPage = 1;
-          handlePageChange(nextPage);
+          handlePageChange(nextPage.toString());
         }}
       >
         next

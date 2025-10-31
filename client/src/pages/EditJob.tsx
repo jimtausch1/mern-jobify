@@ -1,16 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
-import { singleJobQuery } from '../actions/EditJobLoader';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, FormRowSelect, SubmitBtn } from '../components';
 
 export default function EditJob() {
-  const id = useLoaderData();
+  // const id = useLoaderData();
 
-  const {
-    data: { job },
-  } = useQuery(singleJobQuery(id));
+  // const {
+  //   data: { job },
+  // } = editJobLoader(id);
+
+  const job = {} as JobModel;
 
   return (
     <Wrapper>

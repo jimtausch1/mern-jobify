@@ -43,3 +43,15 @@ type UserModel = {
   role?: string;
   avatar?: string;
 };
+
+type AllJobsResponse = {
+  jobs: JobModel[];
+  totalJobs: number;
+  currentPage: number;
+  numOfPages: number;
+};
+
+type StatsResponse = {
+  defaultStats: DefaultStats;
+  monthlyApplications: object[];
+};

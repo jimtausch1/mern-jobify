@@ -1,15 +1,14 @@
-import type { QueryClient } from '@tanstack/react-query';
-import { customFetch } from '../utils';
+import { jobifyApi } from '../slices/jobifyApiSlice';
+import { store } from '../store';
 
-export const statsQuery = {
-  queryKey: ['stats'],
-  queryFn: async () => {
-    const response = await customFetch.get('/jobs/stats');
-    return response.data;
-  },
-};
-
-export const loader = (queryClient: QueryClient) => async () => {
-  const data = await queryClient.ensureQueryData(statsQuery);
-  return data;
+export const loader = async () => {
+  const queryPromise = store.dispatch(jobifyApi.endpoints.getStats.initiate());
+  try {
+    const response = await queryPromise.unwrap();
+    return response;
+  } catch (error) {
+    console.error('Failed to fetch jobs', error);
+  } finally {
+    queryPromise.unsubscribe();
+  }
 };

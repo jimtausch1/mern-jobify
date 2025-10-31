@@ -1,8 +1,9 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
-import { getMemoryRouter, queryClient } from '../utils';
+import { store } from '../store';
+import { getMemoryRouter } from '../utils';
 import Landing from './Landing';
 
 describe('Landing Page', () => {
@@ -10,9 +11,9 @@ describe('Landing Page', () => {
 
   it('should render heading with correct text', () => {
     render(
-      <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <RouterProvider router={router} />
-      </QueryClientProvider>
+      </Provider>
     );
 
     // Log the DOM tree for debugging

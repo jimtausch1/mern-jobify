@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider, useRouteError } from 'react-router-dom';
 import { expect, it, type Mock } from 'vitest';
 
 // import userEvent from '@testing-library/user-event';
-import { DashboardContext } from '../context/DashboardContext';
+import { Provider } from 'react-redux';
 import { Error as ErrorPage } from '../pages';
-import { getMemoryRouter, mockUser, queryClient } from '../utils';
+import { store } from '../store';
+import { getMemoryRouter } from '../utils';
 
 // const profileAction = vi.fn(() => ({ message: 'update user' })); // Mock the action's return value
 
@@ -34,18 +34,9 @@ describe('Error Page', () => {
     const router = getMemoryRouter(['/'], <ErrorPage />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardContext.Provider
-          value={{
-            user: mockUser.user,
-            showSidebar: true,
-            toggleSidebar: () => {},
-            logoutUser: () => {},
-          }}
-        >
-          <RouterProvider router={router} />
-        </DashboardContext.Provider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging
@@ -66,18 +57,9 @@ describe('Error Page', () => {
     const router = getMemoryRouter(['/'], <ErrorPage />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardContext.Provider
-          value={{
-            user: mockUser.user,
-            showSidebar: true,
-            toggleSidebar: () => {},
-            logoutUser: () => {},
-          }}
-        >
-          <RouterProvider router={router} />
-        </DashboardContext.Provider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging

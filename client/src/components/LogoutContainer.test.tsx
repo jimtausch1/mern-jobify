@@ -1,23 +1,26 @@
 import { render, screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
 
-import { DashboardContext } from '../context/DashboardContext';
-import { mockUser } from '../utils';
+import { Provider } from 'react-redux';
+import { store } from '../store';
 import LogoutContainer from './LogoutContainer';
+
+// Mock the 'react-router-dom' module to replace useNavigate
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useLocation: () => vi.fn(), // Return our mock function
+    useNavigate: () => vi.fn(), // Return our mock function
+  };
+});
 
 describe('Logout Container', () => {
   it('should correctly render with no avatar', async () => {
-    const testUser = { ...mockUser.user, avatar: '' };
-
     render(
-      <DashboardContext.Provider
-        value={{
-          user: testUser,
-          logoutUser: () => {},
-        }}
-      >
+      <Provider store={store}>
         <LogoutContainer></LogoutContainer>
-      </DashboardContext.Provider>
+      </Provider>
     );
 
     // Log the DOM tree for debugging

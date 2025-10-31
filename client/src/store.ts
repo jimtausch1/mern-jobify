@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import counterReducer from './slices/counterSlice';
-import currentUserReducer from './slices/currentUserSlice';
 import dashboardReducer from './slices/dashboardSlice';
 import { jobifyApi } from './slices/jobifyApiSlice';
 // ...
@@ -11,8 +9,6 @@ export const store = configureStore({
     // posts: postsReducer,
     // comments: commentsReducer,
     dashboard: dashboardReducer,
-    counter: counterReducer,
-    currentuser: currentUserReducer,
     // Add the generated reducer as a specific top-level slice
     [jobifyApi.reducerPath]: jobifyApi.reducer,
   },

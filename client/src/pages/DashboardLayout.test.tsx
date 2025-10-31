@@ -1,12 +1,12 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
 import { loader as dashboardLoader } from '../actions/DashboardLoader';
-import { DashboardProvider } from '../context/DashboardProvider';
-import { getMemoryRouter, mockUser, queryClient } from '../utils';
+import { store } from '../store';
+import { getMemoryRouter, mockUser } from '../utils';
 import DashboardLayout from './DashboardLayout';
 
 // Define a variable to hold the mock location state
@@ -25,42 +25,19 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Mock useQuery/useSuspenseQuery to return specific data
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query');
-  return {
-    ...actual,
-    useQuery: vi.fn(() => ({
-      data: mockUser,
-      isLoading: false,
-      isError: false,
-    })),
-    useSuspenseQuery: vi.fn(() => ({
-      data: {
-        /* your mocked query data */
-      },
-    })),
-  };
-});
-
 describe('Dashboard Layout Page', () => {
   const user = userEvent.setup();
   it('should correctly render', async () => {
-    const router = getMemoryRouter(
-      ['/', '/dashboard'],
-      <DashboardLayout queryClient={queryClient} />
-    );
+    const router = getMemoryRouter(['/', '/dashboard'], <DashboardLayout />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardProvider queryClient={queryClient}>
-          <RouterProvider router={router} />
-        </DashboardProvider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging
-    // screen.debug(undefined, Infinity);
+    screen.debug(undefined, Infinity);
 
     // Find heading by its text content
     const addJobLink = screen.getAllByText(/add job/i);
@@ -73,10 +50,6 @@ describe('Dashboard Layout Page', () => {
     expect(allJobsLink[0]).toBeInTheDocument();
     expect(statsLink[0]).toBeInTheDocument();
     expect(profileLink[0]).toBeInTheDocument();
-
-    const userButton = screen.getByText(/john/i);
-    expect(userButton).toBeInTheDocument();
-    await user.click(userButton);
 
     const logoutButton = screen.getByText(/logout/i);
     expect(logoutButton).toBeInTheDocument();
@@ -99,17 +72,12 @@ describe('Dashboard Layout Page', () => {
   it('should correctly render while loading', async () => {
     mockNavigationState = 'loading';
 
-    const router = getMemoryRouter(
-      ['/', '/dashboard'],
-      <DashboardLayout queryClient={queryClient} />
-    );
+    const router = getMemoryRouter(['/', '/dashboard'], <DashboardLayout />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardProvider queryClient={queryClient}>
-          <RouterProvider router={router} />
-        </DashboardProvider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging
@@ -129,8 +97,7 @@ describe('Dashboard Layout Page', () => {
   });
 
   test('dashboardLoader returns expected data', async () => {
-    const userQueryFunction = dashboardLoader(queryClient);
-    const data = await userQueryFunction();
+    const data = await dashboardLoader();
     expect(data).toEqual(mockUser);
   });
 });

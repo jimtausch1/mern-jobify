@@ -1,11 +1,11 @@
-import { QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import { RouterProvider } from 'react-router-dom';
 import { expect, it } from 'vitest';
 
+import { Provider } from 'react-redux';
 import { action as profileAction } from '../actions/ProfileAction';
-import { DashboardContext } from '../context/DashboardContext';
-import { getMemoryRouter, mockIdParams, mockRegisterUser, mockUser, queryClient } from '../utils';
+import { store } from '../store';
+import { getMemoryRouter, mockIdParams, mockRegisterUser, mockUser } from '../utils';
 import Profile from './Profile';
 
 // Mock the 'react-router-dom' module to replace useNavigate
@@ -19,24 +19,6 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-// Mock useQuery/useSuspenseQuery to return specific data
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query');
-  return {
-    ...actual,
-    useQuery: vi.fn(() => ({
-      data: mockUser,
-      isLoading: false,
-      isError: false,
-    })),
-    useSuspenseQuery: vi.fn(() => ({
-      data: {
-        /* your mocked query data */
-      },
-    })),
-  };
-});
-
 describe('Profile Page', () => {
   // const user = userEvent.setup();
   const url = 'http://localhost:5000/dashboard/profile';
@@ -46,18 +28,9 @@ describe('Profile Page', () => {
     const router = getMemoryRouter(['/profile'], <Profile />);
 
     render(
-      <QueryClientProvider client={queryClient}>
-        <DashboardContext.Provider
-          value={{
-            user: mockUser.user,
-            showSidebar: true,
-            toggleSidebar: () => {},
-            logoutUser: () => {},
-          }}
-        >
-          <RouterProvider router={router} />
-        </DashboardContext.Provider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
 
     // Log the DOM tree for debugging
@@ -87,9 +60,8 @@ describe('Profile Page', () => {
     mockFormData.append('avatar', mockRegisterUser.name);
     request.formData = async () => mockFormData;
 
-    const profileActionFunction = profileAction(queryClient);
     const funcParam = { params: mockIdParams, request: request, context: {} };
-    await profileActionFunction(funcParam);
+    await profileAction(funcParam);
   });
 
   test('profileAction returns expected error', async () => {
@@ -103,8 +75,7 @@ describe('Profile Page', () => {
     mockFormData.append('avatar', '');
     request.formData = async () => mockFormData;
 
-    const profileActionFunction = profileAction(queryClient);
     const funcParam = { params: mockIdParams, request: request, context: {} };
-    await profileActionFunction(funcParam);
+    await profileAction(funcParam);
   });
 });
