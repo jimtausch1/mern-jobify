@@ -9,6 +9,6 @@ export const loader = async (id: string) => {
     return data;
   } catch (error: any) {
     toast.error(error?.response?.data?.msg);
-    return redirect('/dashboard/all-jobs');
+    return redirect('/dashboard');
   }
 };

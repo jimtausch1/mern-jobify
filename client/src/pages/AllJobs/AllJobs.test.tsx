@@ -30,7 +30,7 @@ describe('All Jobs Page', () => {
   const user = userEvent.setup();
 
   it('should correctly render', async () => {
-    const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
+    const router = getMemoryRouter(['/dashboard'], <AllJobs />);
 
     render(
       <Provider store={store}>
@@ -60,7 +60,7 @@ describe('All Jobs Page', () => {
   });
 
   it('should correctly filter jobs', async () => {
-    const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
+    const router = getMemoryRouter(['/dashboard'], <AllJobs />);
 
     render(
       <Provider store={store}>
@@ -93,7 +93,7 @@ describe('All Jobs Page', () => {
   });
 
   it('should correctly filter jobs by search', async () => {
-    const router = getMemoryRouter(['/dashboard/all-jobs'], <AllJobs />);
+    const router = getMemoryRouter(['/dashboard'], <AllJobs />);
 
     render(
       <Provider store={store}>
@@ -119,7 +119,7 @@ describe('All Jobs Page', () => {
   });
 
   test('allJobsLoader returns expected data', async () => {
-    const request = { url: 'http://localhost:5000/dashboard/all-jobs' } as Request;
+    const request = { url: 'http://localhost:5000/dashboard' } as Request;
     const funcParam = { params: mockSearchParams.searchParams, request: request, context: {} };
     const data = await allJobsLoader(funcParam);
     expect(data).toEqual(mockJobsResponse);

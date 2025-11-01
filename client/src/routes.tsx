@@ -51,6 +51,11 @@ export const routes = [
         children: [
           {
             index: true,
+            element: <AllJobs />,
+            loader: allJobsLoader,
+          },
+          {
+            path: 'add-job',
             element: <AddJob />,
             action: addJobAction,
           },
@@ -58,11 +63,6 @@ export const routes = [
             path: 'stats',
             element: <Stats />,
             loader: statsLoader,
-          },
-          {
-            path: 'all-jobs',
-            element: <AllJobs />,
-            loader: allJobsLoader,
           },
           //   {
           //     path: 'profile',

@@ -11,5 +11,5 @@ export const action = async ({ params }: ActionFunctionArgs) => {
   } catch (error: any) {
     toast.error(error?.response?.data?.msg);
   }
-  return redirect('/dashboard/all-jobs');
+  return redirect('/dashboard');
 };

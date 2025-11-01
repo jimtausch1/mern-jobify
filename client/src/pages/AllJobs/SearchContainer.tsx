@@ -55,7 +55,11 @@ export default function SearchContainer() {
               submit(e.currentTarget.form);
             }}
           />
-          <Link to="/dashboard/all-jobs" className="btn form-btn delete-btn">
+          <Link
+            onClick={() => dispatch(dashboardSlice.actions.resetSearch())}
+            className="btn form-btn delete-btn"
+            to="/dashboard"
+          >
             Reset Search Values
           </Link>
         </div>

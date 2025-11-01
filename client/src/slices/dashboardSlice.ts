@@ -32,6 +32,9 @@ export const dashboardSlice = createSlice({
     toggleTheme: (state) => {
       state.isDarkTheme = !state.isDarkTheme;
     },
+    resetSearch: (state) => {
+      state.searchParams = initialState.searchParams;
+    },
     loadSearch: (state, action: PayloadAction<string>) => {
       state.searchParams.search = action.payload;
     },
@@ -56,6 +59,7 @@ export const dashboardSlice = createSlice({
 export const {
   toggleSidebar,
   toggleTheme,
+  resetSearch,
   loadSearch,
   loadJobStatus,
   loadJobType,
