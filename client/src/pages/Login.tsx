@@ -2,10 +2,12 @@ import { Form, Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
 import { FormRow, Logo, SubmitBtn } from '../components';
-import { customFetch } from '../utils';
+import { useAppDispatch } from '../hooks';
+import { jobifyApi } from '../slices/jobifyApiSlice';
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const loginDemoUser = async () => {
     const data = {
@@ -13,11 +15,11 @@ export default function Login() {
       password: 'secret123',
     };
     try {
-      await customFetch.post('/auth/login', data);
+      await dispatch(jobifyApi.endpoints.loginUser.initiate(data));
       toast.success('Take a test drive');
       navigate('/dashboard');
     } catch {
-      // toast.error(error?.response?.data?.msg);
+      toast.error('authentication invalid');
     }
   };
   return (

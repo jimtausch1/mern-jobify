@@ -23,6 +23,23 @@ export const jobifyApi = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    loginUser: builder.mutation({
+      query: (data) => ({
+        url: 'auth/login',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    logoutUser: builder.query<UserModel, void>({
+      query: () => `auth/logout`,
+    }),
+    registerUser: builder.mutation({
+      query: (data) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: data,
+      }),
+    }),
     getAllJobs: builder.query<AllJobsResponse, SearchParams>({
       query: (params: SearchParams) =>
         `jobs?search=${params.search}&jobStatus=${params.jobStatus}&jobType=${params.jobType}&sort=${params.sort}`,

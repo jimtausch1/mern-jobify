@@ -6,7 +6,6 @@ import Wrapper from '../assets/wrappers/LogoutContainer';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { dashboardSlice } from '../slices/dashboardSlice';
 import { jobifyApi } from '../slices/jobifyApiSlice';
-import { customFetch } from '../utils';
 
 export default function LogoutContainer() {
   const [showLogout, setShowLogout] = useState(false);
@@ -17,7 +16,7 @@ export default function LogoutContainer() {
 
   const logoutUser = useCallback(async () => {
     navigate('/');
-    await customFetch.get('/auth/logout');
+    await dispatch(jobifyApi.endpoints.logoutUser.initiate());
     dispatch(dashboardSlice.actions.loadUser({} as UserModel));
     dispatch(jobifyApi.util.resetApiState());
     toast.success('Logging out...');

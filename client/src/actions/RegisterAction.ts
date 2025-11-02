@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { customFetch } from '../utils';
+import { jobifyApi } from '../slices/jobifyApiSlice';
+import { store } from '../store';
 
 export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
   try {
-    await customFetch.post('/auth/register', data);
-    toast.success('Registration successful');
+    const loginPromise = store.dispatch(jobifyApi.endpoints.registerUser.initiate(data));
+    const response = await loginPromise.unwrap();
+    toast.success(response.msg);
     return redirect('/login');
-  } catch (error: any) {
-    toast.error(error?.response?.data?.msg);
-
-    return error;
+  } catch {
+    toast.error('registration invalid');
   }
 };
