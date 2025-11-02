@@ -55,3 +55,8 @@ type StatsResponse = {
   defaultStats: DefaultStats;
   monthlyApplications: object[];
 };
+
+type AdminStatsResponse = {
+  users: number;
+  jobs: number;
+};

@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { redirect, type ActionFunctionArgs } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { customFetch } from '../utils';
+import { jobifyApi } from '../slices/jobifyApiSlice';
+import { store } from '../store';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -11,11 +11,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return null;
   }
   try {
-    await customFetch.patch('/users/update-user', formData);
+    const editPromise = store.dispatch(jobifyApi.endpoints.editUser.initiate(formData));
+    console.log('Profile updated', (await editPromise).data);
     toast.success('Profile updated successfully');
     return redirect('/dashboard');
-  } catch (error: any) {
-    toast.error(error?.response?.data?.msg);
-    return null;
+  } catch {
+    toast.error('Failed to edit user');
   }
 };

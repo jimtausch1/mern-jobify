@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const queryPromise = store.dispatch(jobifyApi.endpoints.getAllJobs.initiate(searchParams));
   try {
     const response = await queryPromise.unwrap();
-    console.log('Loader loading data');
+    console.log('AllJobsLoader data');
     return response;
   } catch (error) {
     console.error('Failed to fetch jobs', error);

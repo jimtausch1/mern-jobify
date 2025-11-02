@@ -9,10 +9,19 @@ export const jobifyApi = createApi({
     mode: 'cors',
     credentials: 'include',
   }),
-  tagTypes: ['Jobs'],
+  tagTypes: ['User', 'Jobs'],
   endpoints: (builder) => ({
     getCurrentUser: builder.query<UserModel, void>({
       query: () => `users/current-user`,
+      providesTags: ['User'],
+    }),
+    editUser: builder.mutation({
+      query: (data) => ({
+        url: `users/update-user`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['User'],
     }),
     getAllJobs: builder.query<AllJobsResponse, SearchParams>({
       query: (params: SearchParams) =>
@@ -21,6 +30,9 @@ export const jobifyApi = createApi({
     }),
     getStats: builder.query<StatsResponse, void>({
       query: () => `jobs/stats`,
+    }),
+    getAdminStats: builder.query<AdminStatsResponse, void>({
+      query: () => `users/admin/app-stats`,
     }),
     getJob: builder.query<JobModel, string>({
       query: (id: string) => `jobs/${id}`,

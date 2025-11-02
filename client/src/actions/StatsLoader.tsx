@@ -7,7 +7,7 @@ export const loader = async () => {
     const response = await queryPromise.unwrap();
     return response;
   } catch (error) {
-    console.error('Failed to fetch jobs', error);
+    console.error('Failed to fetch stats', error);
   } finally {
     queryPromise.unsubscribe();
   }
