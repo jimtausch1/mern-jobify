@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { redirect } from 'react-router-dom';
+import { redirect, type LoaderFunctionArgs } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { customFetch } from '../utils';
+import { jobifyApi } from '../slices/jobifyApiSlice';
+import { store } from '../store';
 
-export const loader = async (id: string) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  const id = params.id ?? '';
+  const queryPromise = store.dispatch(jobifyApi.endpoints.getJob.initiate(id));
   try {
-    const { data } = await customFetch.get(`/jobs/${id}`);
-    return data;
+    const response = await queryPromise.unwrap();
+    return response;
   } catch (error: any) {
     toast.error(error?.response?.data?.msg);
     return redirect('/dashboard');
+  } finally {
+    queryPromise.unsubscribe();
   }
 };

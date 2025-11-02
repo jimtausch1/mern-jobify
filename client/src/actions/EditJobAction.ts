@@ -1,18 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { redirect, type ActionFunctionArgs } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { customFetch } from '../utils';
+import { jobifyApi } from '../slices/jobifyApiSlice';
+import { store } from '../store';
 
-export const action = async ({ request, params }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
+export const action = async ({ params, request }: ActionFunctionArgs) => {
   try {
-    await customFetch.patch(`/jobs/${params.id}`, data);
-
-    toast.success('Job edited successfully');
+    const id = params.id;
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+    store.dispatch(jobifyApi.endpoints.editJob.initiate({ id, data }));
+    toast.success('Job edited successfully ');
     return redirect('/dashboard');
-  } catch (error: any) {
-    toast.error(error?.response?.data?.msg);
-    return error;
+  } catch {
+    toast.error('Failed to edit job');
   }
 };

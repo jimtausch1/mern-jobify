@@ -1,16 +1,10 @@
-import { Form } from 'react-router-dom';
+import { Form, useLoaderData } from 'react-router-dom';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, FormRowSelect, SubmitBtn } from '../components';
 
 export default function EditJob() {
-  // const id = useLoaderData();
-
-  // const {
-  //   data: { job },
-  // } = editJobLoader(id);
-
-  const job = {} as JobModel;
+  const { job } = useLoaderData();
 
   return (
     <Wrapper>

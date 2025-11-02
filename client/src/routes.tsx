@@ -2,9 +2,9 @@ import { action as addJobAction } from './actions/AddJobAction';
 // import { loader as adminLoader } from './actions/AdminLoader';
 import { loader as allJobsLoader } from './actions/AllJobsLoader';
 import { loader as dashboardLoader } from './actions/DashboardLoader';
-// import { action as deleteJobAction } from './actions/DeleteJobAction';
-// import { action as editJobAction } from './actions/EditJobAction';
-// import { loader as editJobLoader } from './actions/EditJobLoader';
+import { action as deleteJobAction } from './actions/DeleteJobAction';
+import { action as editJobAction } from './actions/EditJobAction';
+import { loader as editJobLoader } from './actions/EditJobLoader';
 import { action as loginAction } from './actions/LoginAction';
 // import { action as profileAction } from './actions/ProfileAction';
 import { action as registerAction } from './actions/RegisterAction';
@@ -14,6 +14,7 @@ import {
   // Admin,
   AllJobs,
   DashboardLayout,
+  EditJob,
   // EditJob,
   Error,
   HomeLayout,
@@ -74,16 +75,16 @@ export const routes = [
           //     element: <Admin />,
           //     loader: adminLoader,
           //   },
-          //   {
-          //     path: 'edit-job/:id',
-          //     element: <EditJob />,
-          //     loader: editJobLoader,
-          //     action: editJobAction,
-          //   },
-          //   {
-          //     path: 'delete-job/:id',
-          //     action: deleteJobAction,
-          //   },
+          {
+            path: 'edit-job/:id',
+            element: <EditJob />,
+            loader: editJobLoader,
+            action: editJobAction,
+          },
+          {
+            path: 'delete-job/:id',
+            action: deleteJobAction,
+          },
         ],
       },
     ],
